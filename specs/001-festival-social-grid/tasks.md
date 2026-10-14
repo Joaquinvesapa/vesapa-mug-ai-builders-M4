@@ -123,14 +123,14 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T037 [P] [US2] Prueba unitaria del layout de grilla: columnas por orden de aparición, eje desde primer inicio a último final, alturas proporcionales a la duración según `MINUTE_HEIGHT_PX`, 18:00–19:00 mide el doble que 18:00–18:30 (AC-34), shows posteriores a medianoche al final del eje (AC-107), regla de texto (ocultar horario, luego truncar con "…") en `tests/unit/domain/grid-layout.test.ts`
+- [X] T037 [P] [US2] Prueba unitaria del layout de grilla: columnas por orden de aparición, eje desde primer inicio a último final, alturas proporcionales a la duración según `MINUTE_HEIGHT_PX`, 18:00–19:00 mide el doble que 18:00–18:30 (AC-34), shows posteriores a medianoche al final del eje (AC-107), regla de texto (ocultar horario, luego truncar con "…") en `tests/unit/domain/grid-layout.test.ts`
 - [ ] T038 [P] [US2] Prueba de integración de consulta del line-up por día: cada show aparece una vez en su día (AC-31, AC-32, AC-04) en `tests/integration/lineup/lineup-query.test.ts`
 - [ ] T039 [P] [US2] Prueba de componente de la grilla: 5 columnas con color distinto en encabezado y bloques (AC-33) en `tests/unit/components/grid.test.tsx`
 - [ ] T040 [P] [US2] Prueba e2e: en 375 px conserva 5 columnas y se desplaza en ambos ejes (AC-105, AC-106); mantener presionado ≥ 500 ms abre el detalle sin cambiar la selección y desplazar no selecciona (AC-35); día inicial según fecha del festival (FR-091); día sin shows, esqueleto de carga y error con "Reintentar" (FR-090); con menos de 5 escenarios las columnas conservan ancho y se alinean a la izquierda (FR-097) en `tests/e2e/grid.spec.ts`
 
 ### Implementation for User Story 2
 
-- [ ] T041 [US2] Implementar cálculo de layout compartido app/PNG en `src/domain/grid-layout.ts` (cierra T037)
+- [X] T041 [US2] Implementar cálculo de layout compartido app/PNG en `src/domain/grid-layout.ts` (cierra T037)
 - [ ] T042 [US2] Implementar consultas de escenarios, shows por día y detalle en `src/server/lineup.ts` (cierra T038)
 - [ ] T043 [US2] Implementar componente de grilla (contenedor con scroll en dos ejes, encabezados y eje horario sticky, bloques posicionados) en `src/components/grid/Grid.tsx` y `src/components/grid/ShowBlock.tsx` (cierra T039)
 - [ ] T044 [US2] Implementar gestos con pointer events (toque, presión ≥ 500 ms, movimiento > 10 px) en `src/components/grid/useBlockGestures.ts` (parte de la unidad de T040)
