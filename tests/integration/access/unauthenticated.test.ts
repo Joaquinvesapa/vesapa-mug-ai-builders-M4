@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import * as showDetail from "@/app/api/shows/[id]/route";
 import * as time from "@/app/api/time/route";
 import { withCleanDb } from "../setup/db";
 import { createSession, createUser, requestWithSession } from "../support/factories";
@@ -13,6 +14,7 @@ type Handler = (request: Request, context: { params: Promise<Record<string, stri
  */
 const CONTENT_ROUTES: { name: string; url: string; handler: Handler; params?: Record<string, string> }[] = [
   { name: "GET /api/time", url: "/api/time", handler: time.GET as Handler },
+  { name: "GET /api/shows/[id]", url: "/api/shows/s1", handler: showDetail.GET as Handler, params: { id: "s1" } },
 ];
 
 describe.each(CONTENT_ROUTES)("$name", ({ url, handler, params = {} }) => {
