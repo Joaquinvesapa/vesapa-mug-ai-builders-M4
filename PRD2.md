@@ -134,6 +134,7 @@ Festival Social Grid es un MVP autenticado para consultar el line-up de un únic
 - **RF-59:** El PNG grupal debe incluir, para cada show resaltado, el conteo de miembros del grupo que lo seleccionaron.
 - **RF-78:** El PNG debe escalar la grilla del día para que entre completa dentro de las dimensiones elegidas, conservando sus proporciones.
 - **RF-80:** En el PNG, el nombre del artista debe tener al menos 20 px de alto de fuente y el horario al menos 16 px; si el texto no entra en su bloque, el horario se omite y luego el nombre se trunca con “…”, sin reducir la fuente por debajo de esos mínimos.
+- **RF-81:** El propietario actual debe poder ver las invitaciones vigentes de su grupo (destinatario, estado, vencimiento) y cancelarlas; una invitación cancelada deja de estar vigente y libera su lugar en el cupo.
 - **RF-60:** El sistema debe ofrecer en la exportación grupal una opción explícita para incluir nombres de usuario.
 - **RF-61:** El PNG grupal no debe mostrar nombres de un show seleccionado por menos de dos miembros, aun con la opción activada.
 - **RF-62:** El sistema debe ofrecer exportación en 1080 × 1920 px.
@@ -144,7 +145,7 @@ Festival Social Grid es un MVP autenticado para consultar el line-up de un únic
 - **RF-65:** El sistema debe requerir autenticación para todo contenido, incluidos line-up y detalle.
 - **RF-66:** El sistema debe permitir acceder a una grilla personal solo a su propietaria.
 - **RF-67:** El sistema debe permitir acceder a un grupo y su vista grupal solo a sus miembros.
-- **RF-68:** El sistema debe permitir acceder a una invitación solo a su destinatario y al propietario del grupo. **[PENDIENTE: confirmar que el propietario puede verlas]**
+- **RF-68:** El sistema debe permitir acceder a una invitación solo a su destinatario y al propietario actual del grupo.
 - **RF-69:** El sistema debe permitir acceder a una exportación solo a quien la solicitó y, en la grupal, siendo miembro del grupo.
 
 ## Requerimientos No Funcionales
@@ -161,6 +162,9 @@ Festival Social Grid es un MVP autenticado para consultar el line-up de un únic
 - **RNF-10 — Bloqueo por intentos fallidos:** Tras 5 intentos fallidos consecutivos para un nombre de usuario, el sistema debe rechazar todo intento de ese usuario, incluso con el PIN correcto, durante 15 minutos.
 - **RNF-11 — Reinicio del contador:** Un inicio de sesión exitoso debe reiniciar a 0 el contador de intentos fallidos.
 - **RNF-12 — Respuesta uniforme de error:** Un PIN incorrecto y un usuario bloqueado deben devolver el mismo código HTTP y el mismo cuerpo.
+- **RNF-13 — Duración de sesión:** Una sesión debe vencer a los 30 días sin uso y renovarse con cada uso.
+- **RNF-14 — Navegadores soportados:** La aplicación debe funcionar en las 2 últimas versiones de Chrome, Safari iOS y Firefox.
+- **RNF-15 — Accesibilidad básica:** El texto debe cumplir contraste WCAG AA, el foco debe ser visible y cada bloque debe ofrecer "Ver detalle" como alternativa a mantener presionado.
 
 ## Criterios de Aceptación
 
@@ -277,6 +281,8 @@ Festival Social Grid es un MVP autenticado para consultar el line-up de un únic
 - **AC-90 (RF-58, RF-62, RF-63):** Dado un miembro de un grupo, cuando solicita la exportación grupal en cada formato, entonces el PNG tiene exactamente las dimensiones elegidas y resalta solo los shows que ese miembro seleccionó.
 - **AC-108 (RF-78):** Dado el día con más escenarios y mayor rango horario del fixture, cuando se exporta en cada formato, entonces todas las columnas y todo el rango horario quedan dentro de la imagen sin recortes.
 - **AC-110 (RF-80):** Dado un show de 15 minutos, cuando se exporta su día en 1080 × 1350, entonces el nombre del artista se ve con fuente de al menos 20 px, truncado con “…” si no entra, y el horario se omite si no hay lugar.
+- **AC-111 (RF-81, RF-37):** Dado un grupo con 14 miembros y 1 invitación vigente, cuando el propietario la cancela, entonces el destinatario deja de verla, no puede aceptarla y el propietario puede invitar a otra persona.
+- **AC-112 (RF-81, RNF-05):** Dada una invitación vigente, cuando un miembro no propietario intenta cancelarla, entonces se rechaza.
 - **AC-91 (RF-59):** Dado un show seleccionado por el solicitante y otros 2 miembros, cuando se genera el PNG grupal, entonces el show muestra conteo 3.
 - **AC-92 (RF-60, RF-61):** Dada una exportación grupal con nombres activados, cuando un show fue seleccionado por 2 miembros, entonces el PNG muestra sus nombres de usuario.
 - **AC-93 (RF-61):** Dada una exportación grupal con nombres activados, cuando un show fue seleccionado por 1 miembro, entonces el PNG no muestra nombres para ese show.
@@ -313,7 +319,8 @@ Festival Social Grid es un MVP autenticado para consultar el line-up de un únic
 - Pertenecer a más de un grupo simultáneamente.
 - Subida de imágenes o fotos como avatar.
 - Idiomas distintos al español.
-- Accesibilidad más allá de la básica.
+- Accesibilidad más allá de la básica (definida en RNF-15).
+- Borrado de cuenta por la persona usuaria y políticas de retención de datos personales.
 - Modo sin conexión, mapas del predio, geolocalización, rutas entre escenarios, calendarios externos o aplicaciones móviles nativas.
 
 ## Riesgos y Dependencias
