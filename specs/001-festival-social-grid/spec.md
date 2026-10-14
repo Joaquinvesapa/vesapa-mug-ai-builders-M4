@@ -35,6 +35,7 @@
 - Q: ¿Se confirman los supuestos de nombre de grupo, desempate y actualización de la vista grupal? → A: Sí: nombre de 1–40 caracteres no único; empates por inicio y luego artista; actualización al abrir o con "Actualizar", sin tiempo real.
 - Q: ¿Se aceptan los valores por defecto de UX para estados vacíos, día inicial, advertencia, estados temporales, miembro removido, cambio de nombre, falla de Google y grillas con menos de 5 escenarios? → A: Sí, tal cual (FR-090 a FR-097).
 - Q: ¿Se aceptan las definiciones restantes (metadatos, perfil, CSV, PNG, escenarios FR-006/018, sin recortes, accesibilidad, sesión, retención, navegadores)? → A: Sí, tal cual; sesión, navegadores, accesibilidad y exclusión de retención agregadas a `PRD2.md` (RNF-13 a RNF-15).
+- Q: ¿Cómo se expresa en el CSV un show que empieza o termina después de medianoche? → A: El día del festival arranca a las 06:00; toda hora de inicio o fin menor a 06:00 corresponde al día calendario siguiente.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -228,7 +229,7 @@ Desarrollo configura los metadatos del único festival argentino del despliegue 
 
 - **FR-001**: El sistema MUST exponer exactamente un festival ubicado en Argentina, sin catálogo ni selector (RF-01).
 - **FR-002**: Los metadatos del festival MUST provenir de configuración de desarrollo; la interfaz solo muestra el nombre del festival en el encabezado y las fechas en el selector de día (RF-02).
-- **FR-003**: El line-up MUST cargarse desde un archivo versionado mediante una importación ejecutada por desarrollo, sin interfaz de carga. El archivo tiene las columnas `id,artist,description,day,stage,start,end`; `day` en formato `YYYY-MM-DD`; `start` y `end` en `HH:MM`, hora de `America/Argentina/Buenos_Aires`; si `end` es menor que `start`, el show termina al día calendario siguiente (RF-03).
+- **FR-003**: El line-up MUST cargarse desde un archivo versionado mediante una importación ejecutada por desarrollo, sin interfaz de carga. El archivo tiene las columnas `id,artist,description,day,stage,start,end`; `day` en formato `YYYY-MM-DD`; `start` y `end` en `HH:MM`, hora de `America/Argentina/Buenos_Aires`; el día del festival arranca a las 06:00, por lo que toda hora de inicio o fin menor a 06:00 corresponde al día calendario siguiente (RF-03, AC-107).
 - **FR-004**: La importación MUST rechazarse por completo, sin dejar shows cargados de esa ejecución, si algún show tiene vacío o mal formado un campo requerido (id, artista, descripción, día, escenario, inicio, finalización), si su finalización no es posterior a su inicio, si su id está repetido, si su día no pertenece a los días configurados del festival, o si hay más de 5 escenarios distintos (RF-04, RF-79, RNF-06).
 - **FR-005**: Cada show MUST pertenecer al día indicado en el line-up aunque termine después de medianoche (RF-71).
 - **FR-006**: Los identificadores de show MUST ser estables entre importaciones. Si una reimportación omite shows existentes, MUST rechazarse sin cambios y listar los faltantes; solo una nueva ejecución con confirmación explícita de eliminación MUST eliminarlos junto con sus selecciones.
