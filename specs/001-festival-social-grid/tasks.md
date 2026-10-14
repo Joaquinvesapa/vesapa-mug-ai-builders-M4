@@ -267,7 +267,7 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 - [ ] T086 **BLOQUEADA** (hosting pendiente) Verificar TLS ≥ 1.2 y rechazo de 1.1 en el endpoint público (RNF-07, AC-22)
 - [ ] T087 Realizar prueba de uso manual con 5 personas (encontrar show, agregarlo, ver coincidencia; éxito si ≥ 4 lo logran sin ayuda en < 3 min) y registrar resultados en `specs/001-festival-social-grid/usability-results.md` (SC-008)
 - [X] T088 [P] Prueba e2e de accesibilidad básica: auditoría WCAG 2.1 A/AA con `@axe-core/playwright` (incluye contraste), foco visible y opción "Ver detalle" en bloques (FR-085) en `tests/e2e/accessibility.spec.ts`
-- [ ] T089 Ejecutar la validación de `specs/001-festival-social-grid/quickstart.md` y registrar resultados
+- [X] T089 Ejecutar la validación de `specs/001-festival-social-grid/quickstart.md` y registrar resultados en `specs/001-festival-social-grid/validation-2026-10-14.md`
 
 ---
 

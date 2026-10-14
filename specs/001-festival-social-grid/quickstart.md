@@ -20,9 +20,9 @@ Guía para comprobar el MVP de punta a punta. Los scripts se definirán en `pack
 
 | Escenario | Cómo | Resultado esperado |
 |---|---|---|
-| Lógica de dominio (tiempo, layout, superposición, coincidencias) | `npm run test:unit` | AC-34, AC-41/42, AC-70…77, AC-80…84 en verde |
-| Importador, auth PIN, grupos, permisos | `npm run test:integration` | AC-01/03/109, AC-06…21, AC-44…69, AC-98…104 en verde |
-| Grilla, gestos, estados en vivo, export | `npm run test:e2e` | AC-35, AC-105…107, AC-85/86, AC-87…95, AC-108/110 en verde |
+| Lógica de dominio y componentes (tiempo, layout, superposición, coincidencias, estados en vivo) | `npm run test:unit` | AC-34, AC-41/42, AC-70…77, AC-80…86, AC-108, AC-110 en verde |
+| Importador, auth PIN, grupos, permisos, exportación (píxeles reales), privacidad | `npm run test:integration` (Docker) | AC-01/03/109, AC-06…21, AC-23…30, AC-44…79, AC-87…95, AC-98…104, AC-111/112 en verde |
+| Flujos en navegador: acceso, grilla, gestos, grupos, vista grupal, descarga de PNG, perfil, accesibilidad | `npm run test:e2e` (Chromium y Firefox; WebKit con `PW_WEBKIT=1`) | AC-05, AC-07, AC-10, AC-35…43, AC-105…107, FR-085, FR-090…097 en verde |
 | Importación inválida | importar un CSV sin escenario o con 6 escenarios | el comando falla y no quedan shows nuevos (AC-03, AC-109) |
 | Acceso | entrar con usuario nuevo + PIN, cerrar sesión, pedir `/grilla/...` | redirige a `/login` (AC-10) |
 | Grupo | crear grupo, invitar a otra cuenta, aceptar, ver la vista grupal | conteo y coincidencia correctos (AC-70, AC-73) |
