@@ -99,7 +99,7 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 - [X] T026 [P] [US1] Prueba de integración de bloqueo con reloj inyectado: 4 fallos + correcto entra (AC-15), 5 fallos + correcto antes de 15:00 rechaza (AC-16), a 15:00 entra (AC-17), reinicio del contador (AC-18), respuesta idéntica PIN incorrecto vs bloqueado (AC-19) en `tests/integration/auth/pin-lockout.test.ts`
 - [X] T027 [P] [US1] Prueba de integración de cierre de sesión: tras `signOut` la sesión se elimina y el contenido se deniega (AC-10) en `tests/integration/auth/sign-out.test.ts`
 - [X] T028 [P] [US1] Prueba de integración de login Google exitoso con proveedor simulado (AC-05); falla o cancelación vuelve a `/login` con mensaje y sin crear cuenta (FR-096); primer acceso Google: sin `username` no accede hasta fijarlo; nombre duplicado case-insensitive rechazado (AC-11, AC-14) en `tests/integration/auth/google-first-access.test.ts`
-- [ ] T029 [P] [US1] Prueba de integración de denegación sin sesión para line-up, detalle, grilla, grupo, invitaciones y exportación (AC-98, AC-99, AC-100) en `tests/integration/access/unauthenticated.test.ts`; se extiende la tabla de rutas en cada historia (cerrada por T082)
+- [X] T029 [P] [US1] Prueba de integración de denegación sin sesión para line-up, detalle, grilla, grupo, invitaciones y exportación (AC-98, AC-99, AC-100) en `tests/integration/access/privacy-sweep.test.ts` (antes `unauthenticated.test.ts`); se extiende la tabla de rutas en cada historia (cerrada por T082)
 - [X] T030 [US1] Prueba e2e del flujo de acceso por PIN (alta, cierre, reingreso; sin opciones de email, FR-018; sesión con vencimiento de 30 días renovable, FR-083) en `tests/e2e/auth.spec.ts`
 
 ### Implementation for User Story 1
@@ -260,7 +260,7 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 
 ## Phase 11: Polish & Cross-Cutting Concerns
 
-- [ ] T082 [P] Prueba de integración transversal de privacidad: barrido de todas las rutas con persona no autenticada y con persona ajena, 0 exposiciones (RNF-04, RNF-05) en `tests/integration/access/privacy-sweep.test.ts`
+- [X] T082 [P] Prueba de integración transversal de privacidad: barrido de todas las rutas con persona no autenticada y con persona ajena, 0 exposiciones (RNF-04, RNF-05) en `tests/integration/access/privacy-sweep.test.ts`, con inventario que falla si una ruta de API queda sin cubrir, más barrido de páginas sin sesión en `tests/e2e/auth.spec.ts`
 - [ ] T083 [P] Fixture de rendimiento: 150 shows, grupo de 15 con 30 selecciones por miembro en `tests/fixtures/perf/seed.ts`
 - [ ] T084 **BLOQUEADA** (herramienta de carga pendiente) Prueba de carga de line-up, grilla personal y vista grupal con p95 < 2 s (RNF-01, AC-97) en `tests/load/`
 - [ ] T085 **BLOQUEADA** (herramienta de carga pendiente) Prueba de carga de exportación con p95 < 5 s (RNF-03, AC-96) en `tests/load/`

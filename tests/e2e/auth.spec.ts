@@ -59,3 +59,16 @@ test.describe("access with username and PIN", () => {
     await expect(alertOf(page)).toHaveText("No se pudo iniciar sesión con Google");
   });
 });
+
+test.describe("privacy sweep of pages (AC-98, AC-99, AC-100)", () => {
+  for (const path of ["/", "/grilla/2026-11-21", "/grupo", "/grupo/vista/2026-11-21", "/invitaciones", "/perfil", "/bienvenida"]) {
+    test(`redirects ${path} to /login without a session`, async ({ page }) => {
+      const response = await page.goto(path);
+
+      await expect(page).toHaveURL(/\/login$/);
+      expect(response?.ok()).toBe(true);
+      await expect(page.getByRole("table")).toHaveCount(0);
+      await expect(page.getByRole("banner")).toHaveCount(0);
+    });
+  }
+});
