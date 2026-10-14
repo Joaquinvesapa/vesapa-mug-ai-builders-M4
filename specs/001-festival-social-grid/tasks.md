@@ -245,8 +245,8 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 
 ### Tests for User Story 7 ⚠️
 
-- [ ] T077 [P] [US7] Prueba de integración de perfil: leer propio (AC-23), cambiar nombre (AC-24) y que invitaciones y vista grupal muestren el nombre nuevo (FR-095), forma y color de avatar (AC-25, AC-26), cuenta nueva con forma y color asignados al azar dentro de los sets (FR-021), no leer ni modificar el de otra persona (AC-29, AC-30) en `tests/integration/profile/profile.test.ts`
-- [ ] T078 [P] [US7] Prueba de integración de `GET /api/users?q=`: devuelve coincidencias por prefijo sin distinguir mayúsculas, `q` < 2 caracteres ⇒ 400, máximo 10, excluye a quien busca (AC-27, FR-022) con exactamente 2 campos `username` y `avatar` (AC-28) en `tests/integration/profile/user-search.test.ts`
+- [X] T077 [P] [US7] Prueba de integración de perfil: leer propio (AC-23), cambiar nombre (AC-24) y que invitaciones y vista grupal muestren el nombre nuevo (FR-095), forma y color de avatar (AC-25, AC-26), cuenta nueva con forma y color asignados al azar dentro de los sets (FR-021), no leer ni modificar el de otra persona (AC-29, AC-30) en `tests/integration/profile/profile.test.ts`
+- [X] T078 [P] [US7] Prueba de integración de `GET /api/users?q=`: devuelve coincidencias por prefijo sin distinguir mayúsculas, `q` < 2 caracteres ⇒ 400, máximo 10, excluye a quien busca (AC-27, FR-022) con exactamente 2 campos `username` y `avatar` (AC-28) en `tests/integration/profile/user-search.test.ts`
 
 ### Implementation for User Story 7
 
