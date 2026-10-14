@@ -43,7 +43,7 @@ Máximo 5 filas (FR-004). Color = `palette[position]` con paleta fija: violeta, 
 | failedAttempts | int | default 0 |
 | lockedUntil | timestamptz? | `now + 15 min` al 5º fallo (FR-013) |
 | avatarShape | enum | circle, square, triangle, diamond, star, hexagon; al azar al crear la cuenta |
-| avatarColor | enum | violeta, fucsia, rosa, naranja, ámbar, esmeralda, celeste, azul; al azar al crear la cuenta |
+| avatarColor | enum | violet, fuchsia, pink, orange, amber, emerald, sky, blue (nombres de la paleta Tailwind para violeta, fucsia, rosa, naranja, ámbar, esmeralda, celeste, azul); al azar al crear la cuenta |
 | createdAt | timestamptz | |
 
 Tablas de Auth.js: `Account` (Google), `Session` (sesiones en DB), `VerificationToken` (no usada).

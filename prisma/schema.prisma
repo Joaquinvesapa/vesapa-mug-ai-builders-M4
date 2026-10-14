@@ -1,0 +1,165 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "esm"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AvatarShape {
+  circle
+  square
+  triangle
+  diamond
+  star
+  hexagon
+}
+
+/// Tailwind palette names for violeta, fucsia, rosa, naranja, ámbar, esmeralda, celeste, azul.
+enum AvatarColor {
+  violet
+  fuchsia
+  pink
+  orange
+  amber
+  emerald
+  sky
+  blue
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  CANCELLED
+}
+
+model Stage {
+  id       String @id @default(cuid())
+  name     String @unique
+  /// Order of appearance in the line-up CSV (0-4); defines column and color.
+  position Int    @unique
+  shows    Show[]
+}
+
+model Show {
+  /// Stable id taken from the line-up CSV.
+  id          String      @id
+  artist      String
+  description String
+  festivalDay DateTime    @db.Date
+  stageId     String
+  stage       Stage       @relation(fields: [stageId], references: [id])
+  startsAt    DateTime    @db.Timestamptz(3)
+  endsAt      DateTime    @db.Timestamptz(3)
+  selections  Selection[]
+
+  @@index([festivalDay, stageId, startsAt])
+}
+
+model User {
+  id             String      @id @default(cuid())
+  /// Null only until a Google account finishes its first access.
+  username       String?
+  /// lower(username); enforces case-insensitive uniqueness.
+  usernameKey    String?     @unique
+  /// Argon2id hash; null for Google accounts.
+  pinHash        String?
+  failedAttempts Int         @default(0)
+  lockedUntil    DateTime?   @db.Timestamptz(3)
+  avatarShape    AvatarShape
+  avatarColor    AvatarColor
+  createdAt      DateTime    @default(now()) @db.Timestamptz(3)
+
+  // Fields written by the Auth.js Prisma adapter for Google accounts.
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @db.Timestamptz(3)
+  image         String?
+
+  accounts    Account[]
+  sessions    Session[]
+  selections  Selection[]
+  membership  Membership?
+  ownedGroups Group[]      @relation("GroupOwner")
+  invitations Invitation[]
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime @db.Timestamptz(3)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime @db.Timestamptz(3)
+
+  @@id([identifier, token])
+}
+
+model Selection {
+  userId    String
+  showId    String
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  show      Show     @relation(fields: [showId], references: [id], onDelete: Cascade)
+
+  @@id([userId, showId])
+}
+
+model Group {
+  id          String       @id @default(cuid())
+  /// 1-40 characters, not unique.
+  name        String
+  ownerId     String
+  owner       User         @relation("GroupOwner", fields: [ownerId], references: [id])
+  createdAt   DateTime     @default(now()) @db.Timestamptz(3)
+  members     Membership[]
+  invitations Invitation[]
+}
+
+model Membership {
+  groupId  String
+  /// Unique: a person belongs to at most one group.
+  userId   String   @unique
+  joinedAt DateTime @default(now()) @db.Timestamptz(3)
+  group    Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([groupId, userId])
+}
+
+model Invitation {
+  id        String           @id @default(cuid())
+  groupId   String
+  inviteeId String
+  createdAt DateTime         @default(now()) @db.Timestamptz(3)
+  status    InvitationStatus @default(PENDING)
+  group     Group            @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  invitee   User             @relation(fields: [inviteeId], references: [id], onDelete: Cascade)
+
+  @@index([inviteeId, status])
+  @@index([groupId, status])
+}
