@@ -64,6 +64,22 @@ describe("layoutDay", () => {
     expect(layout.hourMarks[0].top).toBe(30 * MINUTE_HEIGHT_PX);
   });
 
+  it("puts overlapping shows of the same stage side by side so none is hidden (FR-033)", () => {
+    const layout = layoutDay(stages, [
+      show("a", "norte", "18:00", "19:00"),
+      show("b", "norte", "18:30", "19:30"),
+      show("c", "norte", "20:00", "21:00"),
+    ]);
+    const lane = (id: string) => {
+      const b = layout.blocks.find((x) => x.showId === id)!;
+      return [b.lane, b.lanes];
+    };
+
+    expect(lane("a")).toEqual([0, 2]);
+    expect(lane("b")).toEqual([1, 2]);
+    expect(lane("c")).toEqual([0, 1]);
+  });
+
   it("returns an empty layout for a day without shows (FR-090)", () => {
     const layout = layoutDay(stages, []);
 

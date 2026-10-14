@@ -13,7 +13,16 @@ export type GridStage = { id: string; name: string; position: number };
 export type GridShow = { id: string; artist: string; stageId: string; startsAt: Date; endsAt: Date };
 
 export type GridColumn = { stageId: string; name: string; color: PaletteColor; index: number };
-export type GridBlock = { showId: string; column: number; top: number; height: number; color: PaletteColor };
+export type GridBlock = {
+  showId: string;
+  column: number;
+  top: number;
+  height: number;
+  color: PaletteColor;
+  /** Side-by-side lane inside the column when shows of the same stage overlap. */
+  lane: number;
+  lanes: number;
+};
 export type HourMark = { label: string; top: number };
 
 export type DayLayout = {
@@ -42,6 +51,7 @@ export function layoutDay(stages: readonly GridStage[], shows: readonly GridShow
   const axisEnd = new Date(Math.max(...shows.map((s) => s.endsAt.getTime())));
   const columnOf = new Map(columns.map((c) => [c.stageId, c]));
 
+  const lanes = assignLanes(shows);
   const blocks = shows.flatMap((show) => {
     const column = columnOf.get(show.stageId);
     if (!column) return [];
@@ -52,6 +62,7 @@ export function layoutDay(stages: readonly GridStage[], shows: readonly GridShow
         top: minutesBetween(axisStart, show.startsAt) * MINUTE_HEIGHT_PX,
         height: minutesBetween(show.startsAt, show.endsAt) * MINUTE_HEIGHT_PX,
         color: column.color,
+        ...lanes.get(show.id)!,
       },
     ];
   });
@@ -71,6 +82,36 @@ export function layoutDay(stages: readonly GridStage[], shows: readonly GridShow
     height: minutesBetween(axisStart, axisEnd) * MINUTE_HEIGHT_PX,
     isEmpty: false,
   };
+}
+
+/** Greedy lane assignment per stage; overlapping clusters share their lane count. */
+function assignLanes(shows: readonly GridShow[]): Map<string, { lane: number; lanes: number }> {
+  const result = new Map<string, { lane: number; lanes: number }>();
+  const byStage = Map.groupBy(shows, (s) => s.stageId);
+
+  for (const stageShows of byStage.values()) {
+    const sorted = [...stageShows].sort((a, b) => a.startsAt.getTime() - b.startsAt.getTime() || a.id.localeCompare(b.id));
+    let cluster: { id: string; lane: number }[] = [];
+    let laneEnds: number[] = [];
+    let clusterEnd = -Infinity;
+
+    const flush = () => {
+      for (const item of cluster) result.set(item.id, { lane: item.lane, lanes: laneEnds.length });
+      cluster = [];
+      laneEnds = [];
+    };
+
+    for (const show of sorted) {
+      if (show.startsAt.getTime() >= clusterEnd) flush();
+      let lane = laneEnds.findIndex((end) => end <= show.startsAt.getTime());
+      if (lane === -1) lane = laneEnds.push(0) - 1;
+      laneEnds[lane] = show.endsAt.getTime();
+      cluster.push({ id: show.id, lane });
+      clusterEnd = Math.max(clusterEnd, show.endsAt.getTime());
+    }
+    flush();
+  }
+  return result;
 }
 
 export type TextMetrics = { artistLine: number; timeLine: number; padding: number };

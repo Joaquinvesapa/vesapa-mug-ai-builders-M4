@@ -13,6 +13,8 @@ export type BlockView = {
   column: number;
   top: number;
   height: number;
+  lane: number;
+  lanes: number;
   startLabel: string;
   endLabel: string;
   showTime: boolean;
@@ -54,6 +56,8 @@ export function buildDayView(day: string, stages: readonly GridStage[], shows: r
         column: block.column,
         top: block.top,
         height: block.height,
+        lane: block.lane,
+        lanes: block.lanes,
         startLabel: formatFestivalTime(show.startsAt),
         endLabel: formatFestivalTime(show.endsAt),
         showTime: blockText(block.height, APP_TEXT_METRICS).showTime,
