@@ -149,14 +149,14 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T047 [P] [US3] Prueba unitaria de superposición: solapados advierten nombrando ambos (AC-41); contiguos no (AC-42) en `tests/unit/domain/overlap.test.ts`
-- [ ] T048 [P] [US3] Prueba unitaria de estado temporal con ms exactos: −1 ms próximo, inicio en vivo, final −1 ms en vivo, final finalizado (AC-80…AC-83); usa offset del servidor e ignora hora del dispositivo (AC-84) en `tests/unit/domain/show-status.test.ts`
+- [X] T047 [P] [US3] Prueba unitaria de superposición: solapados advierten nombrando ambos (AC-41); contiguos no (AC-42) en `tests/unit/domain/overlap.test.ts`
+- [X] T048 [P] [US3] Prueba unitaria de estado temporal con ms exactos: −1 ms próximo, inicio en vivo, final −1 ms en vivo, final finalizado (AC-80…AC-83); usa offset del servidor e ignora hora del dispositivo (AC-84) en `tests/unit/domain/show-status.test.ts`
 - [ ] T049 [P] [US3] Prueba de integración de selección: agregar/quitar idempotente, solapados se conservan (AC-43), no afecta selecciones ajenas (AC-38, AC-39), A no lee la grilla de B (AC-101) en `tests/integration/selection/selection.test.ts`
 - [ ] T050 [P] [US3] Prueba e2e: tocar alterna y resalta (AC-36, AC-38), agregar/quitar desde el detalle (AC-37, AC-39), exactamente 2 bloques resaltados (AC-40), estado cambia sin recarga dentro de 60 s con reloj simulado (AC-85, AC-86); aviso de superposición sobre la grilla del día e ícono ⚠ en los bloques (FR-092) en `tests/e2e/personal-grid.spec.ts`
 
 ### Implementation for User Story 3
 
-- [ ] T051 [US3] Implementar detección de superposición en `src/domain/overlap.ts` (cierra T047)
+- [X] T051 [US3] Implementar detección de superposición en `src/domain/overlap.ts` (cierra T047)
 - [ ] T052 [US3] Implementar estado temporal y hook de reloj con offset (recalcula cada 15 s, resincroniza cada 5 min) en `src/domain/show-status.ts` y `src/components/grid/useServerClock.ts` (cierra T048)
 - [ ] T053 [US3] Implementar acciones `toggleSelection` / `setSelection` sobre la sesión en `src/server/actions/selection.ts` (cierra T049)
 - [ ] T054 [US3] Integrar selección optimista, resaltado, advertencias y estados en la grilla en `src/components/grid/Grid.tsx` y `src/components/grid/OverlapWarning.tsx` (cierra T050)
