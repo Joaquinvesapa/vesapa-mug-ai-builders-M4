@@ -11,6 +11,13 @@
   --font-sans: var(--font-atkinson);
 }
 
+/* Wide content (the grid) scrolls inside its own container; the document never overflows sideways,
+   which would make mobile browsers zoom out and misplace fixed dialogs. */
+html,
+body {
+  overflow-x: clip;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

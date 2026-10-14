@@ -23,3 +23,10 @@ export async function longPress(page: Page, selector: ReturnType<Page["locator"]
   await page.waitForTimeout(ms);
   await page.mouse.up();
 }
+
+/** Clicks and waits until the Server Action triggered by the click has answered. */
+export async function clickAndWaitForAction(page: Page, target: ReturnType<Page["locator"]>) {
+  const saved = page.waitForResponse((r) => r.request().method() === "POST" && !!r.request().headers()["next-action"]);
+  await target.click();
+  await saved;
+}

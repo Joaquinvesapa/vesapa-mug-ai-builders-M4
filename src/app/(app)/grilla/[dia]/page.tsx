@@ -11,7 +11,7 @@ import { listSelectedShowIds } from "@/server/selection";
 
 export default function DayPage({ params }: PageProps<"/grilla/[dia]">) {
   return (
-    <main className="flex flex-1 flex-col">
+    <main className="flex min-h-0 flex-1 flex-col">
       <Suspense fallback={<GridSkeleton />}>
         <DayContent params={params} />
       </Suspense>

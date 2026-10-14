@@ -29,7 +29,7 @@ export function DayGrid({ view, selectedIds, onToggle, statusOf, warnedIds, deta
     <>
       <div
         data-testid="grid-scroll"
-        className="relative max-h-[calc(100dvh-9rem)] overflow-auto overscroll-contain"
+        className="relative min-h-0 flex-1 overflow-auto overscroll-contain"
       >
         <div data-testid="grid-canvas" role="table" aria-label={`Grilla del ${view.dayLabel}`} className="w-max">
           <div role="row" className="sticky top-0 z-20 grid bg-neutral-950" style={{ gridTemplateColumns: template }}>

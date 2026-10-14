@@ -23,7 +23,7 @@ export function ShowDetail({ block, dayLabel, onClose, children }: Props) {
         aria-modal="true"
         aria-labelledby={titleId}
         onClick={(event) => event.stopPropagation()}
-        className="w-full max-w-md rounded-xl border-t-4 bg-neutral-900 p-5"
+        className="max-h-[85dvh] w-full max-w-md overflow-y-auto rounded-xl border-t-4 bg-neutral-900 p-5"
         style={{ borderTopColor: block.colorHex }}
       >
         <h2 id={titleId} className="text-xl font-bold">

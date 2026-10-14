@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { signUp } from "./support";
+import { clickAndWaitForAction, signUp } from "./support";
 
 const DAY = "/grilla/2026-11-21";
 const block = (page: Page, artist: string) => page.getByRole("button", { name: new RegExp(`^${artist},`) });
@@ -10,17 +10,15 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("a tap selects and highlights a block, and the selection persists (AC-36, AC-38, AC-40)", async ({ page }) => {
-  await block(page, "Los Cardos").click();
-  await block(page, "Las Brujas").click();
+  await clickAndWaitForAction(page, block(page, "Los Cardos"));
+  await clickAndWaitForAction(page, block(page, "Las Brujas"));
   await expect(block(page, "Los Cardos")).toHaveAttribute("aria-pressed", "true");
 
-  await page.waitForLoadState("networkidle");
   await page.reload();
   await expect(page.getByRole("button", { pressed: true })).toHaveCount(2);
 
-  await block(page, "Los Cardos").click();
+  await clickAndWaitForAction(page, block(page, "Los Cardos"));
   await expect(block(page, "Los Cardos")).toHaveAttribute("aria-pressed", "false");
-  await page.waitForLoadState("networkidle");
   await page.reload();
   await expect(page.getByRole("button", { pressed: true })).toHaveCount(1);
 });

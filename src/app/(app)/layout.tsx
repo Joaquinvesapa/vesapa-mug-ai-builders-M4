@@ -6,8 +6,8 @@ import { requirePageUser } from "@/server/page-session";
 
 export default function AppLayout({ children }: LayoutProps<"/">) {
   return (
-    <div className="flex min-h-full flex-1 flex-col">
-      <header className="flex items-center justify-between gap-4 border-b border-neutral-800 px-4 py-3">
+    <div className="flex h-dvh flex-col">
+      <header className="flex shrink-0 items-center justify-between gap-4 border-b border-neutral-800 px-4 py-3">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
           <p className="font-bold">{festival.name}</p>
           <nav aria-label="Principal" className="flex gap-3 text-sm">
@@ -26,7 +26,8 @@ export default function AppLayout({ children }: LayoutProps<"/">) {
           <UserMenu />
         </Suspense>
       </header>
-      {children}
+      {/* Pages scroll inside this area; the grid page uses it entirely for its own two-axis scroll. */}
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">{children}</div>
     </div>
   );
 }
