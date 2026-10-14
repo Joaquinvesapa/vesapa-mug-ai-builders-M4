@@ -224,13 +224,13 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 ### Tests for User Story 6 ⚠️
 
 - [X] T071 [P] [US6] Prueba unitaria de escala del PNG: grilla completa dentro del formato sin deformar (AC-108) y fuentes ≥ 20 px artista / ≥ 16 px horario con omisión y truncado (AC-110) en `tests/unit/export/export-layout.test.ts`
-- [ ] T072 [P] [US6] Prueba de integración de `GET /api/export`: dimensiones exactas (AC-87, AC-88, AC-90), 8 shows con 2 resaltados (AC-89), sin estados temporales (FR-093), nombre de archivo y encabezado con festival, día y grupo (FR-070), bloques dentro del lienzo y aspecto conservado ±1 px (FR-071), 40 shows incluidos (AC-95), conteo grupal (AC-91), nombres solo con opción y conteo ≥ 2 (AC-92, AC-93, AC-94), `Cache-Control: private, no-store`, ajeno a G denegado (AC-104) en `tests/integration/export/export.test.ts`
+- [X] T072 [P] [US6] Prueba de integración de `GET /api/export`: dimensiones exactas (AC-87, AC-88, AC-90), 8 shows con 2 resaltados (AC-89), sin estados temporales (FR-093), nombre de archivo y encabezado con festival, día y grupo (FR-070), bloques dentro del lienzo y aspecto conservado ±1 px (FR-071), 40 shows incluidos (AC-95), conteo grupal (AC-91), nombres solo con opción y conteo ≥ 2 (AC-92, AC-93, AC-94), `Cache-Control: private, no-store`, ajeno a G denegado (AC-104) en `tests/integration/export/export.test.ts`
 
 ### Implementation for User Story 6
 
 - [X] T073 [US6] Implementar cálculo de escala y tamaños mínimos de fuente sobre `grid-layout` en `src/export/export-layout.ts` (cierra T071)
-- [ ] T074 [US6] Implementar plantilla Satori de la grilla (personal y grupal) en `src/export/GridImage.tsx` (parte de la unidad de T072)
-- [ ] T075 [US6] Implementar `GET /api/export` (validación con zod, autorización, Satori → resvg) en `src/app/api/export/route.ts` (cierra T072)
+- [X] T074 [US6] Implementar plantilla Satori de la grilla (personal y grupal) en `src/export/GridImage.tsx` (parte de la unidad de T072)
+- [X] T075 [US6] Implementar `GET /api/export` (validación con zod, autorización, Satori → resvg) en `src/app/api/export/route.ts` (cierra T072)
 - [ ] T076 [US6] Implementar diálogo de exportación (día, formato, opción explícita de nombres) en `src/components/export/ExportDialog.tsx`
 
 **Checkpoint**: exportación lista.

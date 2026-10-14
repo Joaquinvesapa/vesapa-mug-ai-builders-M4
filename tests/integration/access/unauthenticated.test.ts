@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import * as exportPng from "@/app/api/export/route";
 import * as groupView from "@/app/api/group/view/route";
 import * as showDetail from "@/app/api/shows/[id]/route";
 import * as time from "@/app/api/time/route";
@@ -15,6 +16,7 @@ type Handler = (request: Request, context: { params: Promise<Record<string, stri
  */
 const CONTENT_ROUTES: { name: string; url: string; handler: Handler; params?: Record<string, string> }[] = [
   { name: "GET /api/time", url: "/api/time", handler: time.GET as Handler },
+  { name: "GET /api/export", url: "/api/export?kind=personal&day=2026-11-21&format=1080x1920", handler: exportPng.GET as Handler },
   { name: "GET /api/group/view", url: "/api/group/view?day=2026-11-21", handler: groupView.GET as Handler },
   { name: "GET /api/shows/[id]", url: "/api/shows/s1", handler: showDetail.GET as Handler, params: { id: "s1" } },
 ];
