@@ -63,7 +63,7 @@ async function GroupContent({ searchParams }: { searchParams: PageProps<"/grupo"
         <h1 className="text-2xl font-bold">{group.name}</h1>
         <Link
           href={`/grupo/vista/${defaultFestivalDay(festival.days, new Date())}`}
-          className="self-start rounded-lg bg-violet-500 px-4 py-2 font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          className="self-start rounded-lg bg-violet-600 px-4 py-2 font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         >
           Ver coincidencias del grupo
         </Link>

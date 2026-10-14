@@ -64,7 +64,7 @@ export function PinLoginForm() {
       <button
         type="submit"
         disabled={pending}
-        className="rounded-lg bg-violet-500 px-4 py-3 font-bold text-white disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        className="rounded-lg bg-violet-600 px-4 py-3 font-bold text-white disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
         Entrar
       </button>

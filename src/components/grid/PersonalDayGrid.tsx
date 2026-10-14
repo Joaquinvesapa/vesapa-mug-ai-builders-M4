@@ -77,7 +77,7 @@ export function PersonalDayGrid({ view, initialSelectedIds, serverNow, setSelect
             <button
               type="button"
               onClick={() => change(block.showId, !isSelected)}
-              className="rounded-lg bg-violet-500 px-4 py-2 font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="rounded-lg bg-violet-600 px-4 py-2 font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               {isSelected ? "Quitar de mi grilla" : "Agregar a mi grilla"}
             </button>
