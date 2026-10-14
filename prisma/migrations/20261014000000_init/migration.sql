@@ -127,9 +127,6 @@ CREATE TABLE "Invitation" (
 CREATE UNIQUE INDEX "Stage_name_key" ON "Stage"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Stage_position_key" ON "Stage"("position");
-
--- CreateIndex
 CREATE INDEX "Show_festivalDay_stageId_startsAt_idx" ON "Show"("festivalDay", "stageId", "startsAt");
 
 -- CreateIndex

@@ -12,7 +12,8 @@
     "test:integration": "vitest run --project integration",
     "test:e2e": "playwright test",
     "postinstall": "prisma generate",
-    "db:migrate": "prisma migrate deploy"
+    "db:migrate": "prisma migrate deploy",
+    "import:lineup": "tsx --env-file-if-exists=.env.local scripts/import-lineup.mts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "2.11.3",

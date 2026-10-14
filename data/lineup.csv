@@ -1,0 +1,100 @@
+id,artist,description,day,stage,start,end
+show-001,Fuego Faros,Rock,2026-11-20,Escenario Norte,16:00,17:00
+show-002,Pampa Brujas,Tango,2026-11-20,Escenario Norte,17:15,18:00
+show-003,Viento Las,Pop,2026-11-20,Escenario Norte,18:15,19:00
+show-004,Andes Cielo,Folk,2026-11-20,Escenario Norte,19:15,20:30
+show-005,Andes Las,Tango,2026-11-20,Escenario Norte,20:45,21:30
+show-006,Sur Las,Tango,2026-11-20,Escenario Norte,21:45,22:30
+show-007,Faros Las,Folk,2026-11-20,Escenario Norte,22:45,00:15
+show-008,Fuego Noche,Jazz,2026-11-20,Escenario Norte,00:30,01:15
+show-009,Pampa Noche,Reggae,2026-11-20,Escenario Sur,16:15,17:15
+show-010,Pampa Viento,Hip hop,2026-11-20,Escenario Sur,17:30,18:30
+show-011,Cielo Las,Tango,2026-11-20,Escenario Sur,18:45,19:30
+show-012,Delta Andes,Hip hop,2026-11-20,Escenario Sur,19:45,20:45
+show-013,Nube Brujas,Electrónica,2026-11-20,Escenario Sur,21:00,22:15
+show-014,Luna Sur,Pop,2026-11-20,Escenario Sur,22:30,23:30
+show-015,Noche Delta,Hip hop,2026-11-20,Escenario Sur,23:45,01:15
+show-016,Nube Noche,Tango,2026-11-20,Carpa Electrónica,16:30,18:30
+show-017,Pampa Andes,Cumbia,2026-11-20,Carpa Electrónica,18:45,19:45
+show-018,Fuego Delta,Jazz,2026-11-20,Carpa Electrónica,20:00,21:30
+show-019,Cielo Cardos,Hip hop,2026-11-20,Carpa Electrónica,21:45,22:45
+show-020,Brujas Delta,Tango,2026-11-20,Carpa Electrónica,23:00,01:00
+show-021,Cielo Cielo,Electrónica,2026-11-20,Escenario Río,16:45,18:00
+show-022,Cielo Las,Electrónica,2026-11-20,Escenario Río,18:15,19:30
+show-023,Nube Noche,Jazz,2026-11-20,Escenario Río,19:45,21:15
+show-024,Los Nube,Hip hop,2026-11-20,Escenario Río,21:30,22:30
+show-025,Pampa Delta,Rock,2026-11-20,Escenario Río,22:45,23:45
+show-026,Noche Fuego,Folk,2026-11-20,Escenario Río,00:00,01:00
+show-027,Faros Delta,Pop,2026-11-20,Patio Acústico,17:00,18:15
+show-028,Nube Faros,Reggae,2026-11-20,Patio Acústico,18:30,19:30
+show-029,Fuego Andes,Reggae,2026-11-20,Patio Acústico,19:45,20:45
+show-030,Andes Brujas,Jazz,2026-11-20,Patio Acústico,21:00,22:00
+show-031,Fuego Cielo,Cumbia,2026-11-20,Patio Acústico,22:15,23:15
+show-032,Sur Sur,Rock,2026-11-20,Patio Acústico,23:30,00:30
+show-033,Luna Río,Electrónica,2026-11-20,Patio Acústico,00:45,02:00
+show-034,Fuego Andes,Reggae,2026-11-21,Escenario Norte,16:00,16:45
+show-035,Cardos Fuego,Reggae,2026-11-21,Escenario Norte,17:00,18:00
+show-036,Las Nube,Reggae,2026-11-21,Escenario Norte,18:15,19:45
+show-037,Faros Faros,Jazz,2026-11-21,Escenario Norte,20:00,21:15
+show-038,Delta Faros,Rock,2026-11-21,Escenario Norte,21:30,22:15
+show-039,Cielo Viento,Indie,2026-11-21,Escenario Norte,22:30,23:30
+show-040,Pampa Cardos,Tango,2026-11-21,Escenario Norte,23:45,00:45
+show-041,Pampa Los,Tango,2026-11-21,Escenario Sur,16:15,17:00
+show-042,Pampa Brujas,Tango,2026-11-21,Escenario Sur,17:15,18:15
+show-043,Cielo Viento,Tango,2026-11-21,Escenario Sur,18:30,19:15
+show-044,Fuego Río,Hip hop,2026-11-21,Escenario Sur,19:30,20:45
+show-045,Brujas Delta,Pop,2026-11-21,Escenario Sur,21:00,22:30
+show-046,Delta Nube,Indie,2026-11-21,Escenario Sur,22:45,23:30
+show-047,Noche Cielo,Cumbia,2026-11-21,Escenario Sur,23:45,01:00
+show-048,Cardos Río,Indie,2026-11-21,Carpa Electrónica,16:30,17:30
+show-049,Luna Los,Folk,2026-11-21,Carpa Electrónica,17:45,19:45
+show-050,Brujas Fuego,Reggae,2026-11-21,Carpa Electrónica,20:00,22:00
+show-051,Noche Cielo,Electrónica,2026-11-21,Carpa Electrónica,22:15,23:15
+show-052,Brujas Luna,Hip hop,2026-11-21,Carpa Electrónica,23:30,01:30
+show-053,Cardos Sur,Tango,2026-11-21,Escenario Río,16:45,17:45
+show-054,Sur Faros,Folk,2026-11-21,Escenario Río,18:00,19:00
+show-055,Delta Brujas,Rock,2026-11-21,Escenario Río,19:15,20:15
+show-056,Río Delta,Electrónica,2026-11-21,Escenario Río,20:30,21:15
+show-057,Brujas Nube,Hip hop,2026-11-21,Escenario Río,21:30,22:30
+show-058,Cielo Sur,Pop,2026-11-21,Escenario Río,22:45,23:45
+show-059,Delta Viento,Hip hop,2026-11-21,Escenario Río,00:00,01:00
+show-060,Delta Los,Indie,2026-11-21,Patio Acústico,17:00,18:00
+show-061,Cielo Pampa,Jazz,2026-11-21,Patio Acústico,18:15,19:15
+show-062,Delta Luna,Jazz,2026-11-21,Patio Acústico,19:30,20:30
+show-063,Cielo Faros,Indie,2026-11-21,Patio Acústico,20:45,21:45
+show-064,Cielo Luna,Cumbia,2026-11-21,Patio Acústico,22:00,23:15
+show-065,Los Fuego,Tango,2026-11-21,Patio Acústico,23:30,00:30
+show-066,Fuego Delta,Hip hop,2026-11-21,Patio Acústico,00:45,02:00
+show-067,Fuego Los,Rock,2026-11-22,Escenario Norte,16:00,17:00
+show-068,Fuego Andes,Folk,2026-11-22,Escenario Norte,17:15,18:00
+show-069,Los Río,Folk,2026-11-22,Escenario Norte,18:15,19:15
+show-070,Sur Cardos,Electrónica,2026-11-22,Escenario Norte,19:30,20:30
+show-071,Andes Fuego,Rock,2026-11-22,Escenario Norte,20:45,22:15
+show-072,Nube Andes,Reggae,2026-11-22,Escenario Norte,22:30,23:30
+show-073,Fuego Los,Indie,2026-11-22,Escenario Norte,23:45,00:45
+show-074,Los Fuego,Cumbia,2026-11-22,Escenario Sur,16:15,17:15
+show-075,Delta Pampa,Reggae,2026-11-22,Escenario Sur,17:30,18:30
+show-076,Cardos Delta,Pop,2026-11-22,Escenario Sur,18:45,19:30
+show-077,Las Sur,Folk,2026-11-22,Escenario Sur,19:45,21:15
+show-078,Las Pampa,Reggae,2026-11-22,Escenario Sur,21:30,22:30
+show-079,Los Cielo,Indie,2026-11-22,Escenario Sur,22:45,00:00
+show-080,Viento Río,Indie,2026-11-22,Escenario Sur,00:15,01:15
+show-081,Delta Sur,Reggae,2026-11-22,Carpa Electrónica,16:30,18:30
+show-082,Viento Nube,Cumbia,2026-11-22,Carpa Electrónica,18:45,20:15
+show-083,Pampa Faros,Indie,2026-11-22,Carpa Electrónica,20:30,22:00
+show-084,Cielo Sur,Jazz,2026-11-22,Carpa Electrónica,22:15,23:45
+show-085,Viento Noche,Pop,2026-11-22,Carpa Electrónica,00:00,01:00
+show-086,Brujas Fuego,Electrónica,2026-11-22,Escenario Río,16:45,17:45
+show-087,Nube Sur,Pop,2026-11-22,Escenario Río,18:00,19:00
+show-088,Delta Luna,Folk,2026-11-22,Escenario Río,19:15,20:30
+show-089,Andes Faros,Hip hop,2026-11-22,Escenario Río,20:45,21:45
+show-090,Viento Brujas,Hip hop,2026-11-22,Escenario Río,22:00,23:15
+show-091,Brujas Los,Hip hop,2026-11-22,Escenario Río,23:30,00:15
+show-092,Nube Nube,Rock,2026-11-22,Escenario Río,00:30,02:00
+show-093,Cardos Noche,Reggae,2026-11-22,Patio Acústico,17:00,18:15
+show-094,Pampa Sur,Pop,2026-11-22,Patio Acústico,18:30,19:15
+show-095,Río Río,Rock,2026-11-22,Patio Acústico,19:30,20:15
+show-096,Río Fuego,Jazz,2026-11-22,Patio Acústico,20:30,21:30
+show-097,Faros Fuego,Reggae,2026-11-22,Patio Acústico,21:45,22:45
+show-098,Delta Cardos,Pop,2026-11-22,Patio Acústico,23:00,00:30
+show-099,Las Luna,Jazz,2026-11-22,Patio Acústico,00:45,01:45

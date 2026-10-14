@@ -40,7 +40,8 @@ model Stage {
   id       String @id @default(cuid())
   name     String @unique
   /// Order of appearance in the line-up CSV (0-4); defines column and color.
-  position Int    @unique
+  /// Unique in practice: only the line-up importer writes stages.
+  position Int
   shows    Show[]
 }
 
