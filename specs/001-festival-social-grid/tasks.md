@@ -57,7 +57,7 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 - [ ] T015 Implementar `requireUser()` / `requireUserWithUsername()` y protección de rutas en `src/server/session.ts` y `src/proxy.ts` (o el equivalente que indique la documentación de la versión instalada) (cierra T014)
 - [ ] T016 [P] Prueba de integración de `GET /api/time` (requiere sesión, devuelve `{ now }` ISO UTC) en `tests/integration/time.test.ts`
 - [ ] T017 [P] Implementar `GET /api/time` en `src/app/api/time/route.ts` (cierra T016)
-- [ ] T018 [P] Paleta fija de 5 colores de escenario y 8 de avatar como tokens Tailwind en `src/domain/palettes.ts`
+- [X] T018 [P] Paleta fija de 5 colores de escenario y 8 de avatar como tokens Tailwind en `src/domain/palettes.ts`
 
 **Checkpoint**: base lista; las historias pueden empezar.
 
