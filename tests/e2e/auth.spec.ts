@@ -1,11 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
-
-/** Excludes the route announcer that Next.js renders with role="alert". */
-const alertOf = (page: Page) => page.locator('[role="alert"]:not(#__next-route-announcer__)');
-
-function uniqueUsername() {
-  return `u${Date.now().toString(36)}${Math.floor(Math.random() * 1e6).toString(36)}`.slice(0, 30);
-}
+import { expect, test } from "@playwright/test";
+import { alertOf, uniqueUsername } from "./support";
 
 test.describe("access with username and PIN", () => {
   test("redirects to /login without a session and offers no email access (FR-018)", async ({ page }) => {
@@ -25,7 +19,7 @@ test.describe("access with username and PIN", () => {
     await page.getByLabel("PIN de 6 dígitos").fill("482913");
     await page.getByRole("button", { name: "Entrar" }).click();
 
-    await expect(page).toHaveURL(/\/$/);
+    await expect(page).toHaveURL(/\/grilla\/\d{4}-\d{2}-\d{2}$/);
     await expect(page.getByRole("banner")).toContainText("Festival de demostración");
     await expect(page.getByRole("banner")).toContainText(username);
 

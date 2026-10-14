@@ -1,17 +1,18 @@
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import { festival } from "@config/festival";
+import { defaultFestivalDay } from "@/domain/festival-days";
 import { requirePageUser } from "@/server/page-session";
 
 export default function Home() {
   return (
-    <main className="flex flex-1 items-center justify-center p-8">
-      <Suspense>
-        <Greeting />
-      </Suspense>
-    </main>
+    <Suspense>
+      <OpenDefaultDay />
+    </Suspense>
   );
 }
 
-async function Greeting() {
-  const user = await requirePageUser();
-  return <h1 className="text-2xl font-bold">Hola, {user.username}</h1>;
+async function OpenDefaultDay(): Promise<never> {
+  await requirePageUser();
+  redirect(`/grilla/${defaultFestivalDay(festival.days, new Date())}`);
 }
