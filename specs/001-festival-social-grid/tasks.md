@@ -179,15 +179,15 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 - [X] T056 [P] [US4] Prueba de integración de invitaciones con reloj inyectado: invitar y ver (AC-50, AC-54), usuario con grupo rechazado (AC-53), 14:59 acepta y 15:00 rechaza (AC-55, AC-56, AC-59), rechazar (AC-60), cupo con vigentes y vencidas (AC-45, AC-46, AC-57, AC-58), cancelar libera cupo y desaparece para el destinatario (FR-057, AC-111), invitación duplicada rechazada, invitaciones vigentes de varios grupos permitidas y al aceptar una las demás quedan invalidadas y liberan cupo (FR-053) en `tests/integration/groups/invitations.test.ts`
 - [X] T057 [P] [US4] Prueba de integración de permisos: no propietario no renombra, invita, cancela, elimina miembros, transfiere ni elimina (AC-49, AC-52, AC-63, AC-65, AC-68); ajeno no lee ni modifica (AC-102); B no acepta/rechaza/lee invitación de A (AC-69, AC-103); propietario sí ve las suyas; no propietario no cancela (AC-112) en `tests/integration/groups/group-authorization.test.ts`
 - [X] T058 [P] [US4] Prueba de integración de concurrencia: dos invitaciones simultáneas con un solo lugar ⇒ se crea una sola; una persona que acepta dos grupos a la vez ⇒ entra a uno solo; invitaciones y aceptaciones simultáneas nunca superan 15 (verificado que falla sin `FOR UPDATE`) en `tests/integration/groups/group-concurrency.test.ts`
-- [ ] T059 [US4] Prueba e2e del flujo crear → invitar → aceptar en `tests/e2e/groups.spec.ts`
+- [X] T059 [US4] Prueba e2e del flujo crear → invitar → aceptar en `tests/e2e/groups.spec.ts`
 
 ### Implementation for User Story 4
 
 - [X] T060 [US4] Implementar servicio de grupos (crear, renombrar 1–40 caracteres, transferir, abandonar, eliminar miembro, eliminar grupo) con bloqueo `SELECT … FOR UPDATE` en `src/server/groups/group-service.ts` (cierra T055)
 - [X] T061 [US4] Implementar servicio de invitaciones (crear, aceptar, rechazar, cancelar; vigencia derivada `PENDING && now < createdAt + 15 min`; cupo miembros + vigentes ≤ 15) en `src/server/groups/invitation-service.ts` (cierra T056, T058)
-- [ ] T062 [US4] Implementar acciones de servidor del contrato (`createGroup`, `renameGroup`, `invite`, `cancelInvitation`, `acceptInvitation`, `rejectInvitation`, `leaveGroup`, `removeMember`, `transferOwnership`, `deleteGroup`) en `src/server/actions/groups.ts` (cierra T057)
-- [ ] T063 [US4] Implementar página `/grupo` (miembros, gestión, invitaciones vigentes solo para propietario, invitar por nombre sin email — AC-51) en `src/app/(app)/grupo/page.tsx` (parte de la unidad de T059)
-- [ ] T064 [US4] Implementar página `/invitaciones` con las vigentes recibidas en `src/app/(app)/invitaciones/page.tsx` (cierra T059)
+- [X] T062 [US4] Implementar acciones de servidor del contrato (`createGroup`, `renameGroup`, `invite`, `cancelInvitation`, `acceptInvitation`, `rejectInvitation`, `leaveGroup`, `removeMember`, `transferOwnership`, `deleteGroup`) en `src/server/actions/groups.ts` (cierra T057)
+- [X] T063 [US4] Implementar página `/grupo` (miembros, gestión, invitaciones vigentes solo para propietario, invitar por nombre sin email — AC-51) en `src/app/(app)/grupo/page.tsx` (parte de la unidad de T059)
+- [X] T064 [US4] Implementar página `/invitaciones` con las vigentes recibidas en `src/app/(app)/invitaciones/page.tsx` (cierra T059)
 
 **Checkpoint**: grupos funcionales.
 
