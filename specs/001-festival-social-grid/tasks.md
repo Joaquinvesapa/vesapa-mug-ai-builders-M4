@@ -48,7 +48,7 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 
 - [X] T007 Crear helper de integración que levanta PostgreSQL con Testcontainers, aplica migraciones de Prisma y limpia tablas entre pruebas en `tests/integration/setup/db.ts`
 - [X] T008 Definir esquema Prisma completo según data-model.md en `prisma/schema.prisma`: `Stage` (`position` int 0–4, `name` único), `Show` (`id` del CSV, `endsAt > startsAt`, índice `(festivalDay, stageId, startsAt)`), `User` (`username` 3–30 nullable hasta primer acceso, `usernameKey` único, `pinHash` nullable, `failedAttempts` default 0, `lockedUntil` nullable, enums `avatarShape` (circle|square|triangle|diamond|star|hexagon) y `avatarColor` violeta|fucsia|rosa|naranja|ámbar|esmeralda|celeste|azul), `Selection` PK `(userId, showId)`, `Group` (`name` 1–40, `ownerId`), `Membership` (`userId` único, cascade por grupo), `Invitation` (`status` PENDING|ACCEPTED|REJECTED|CANCELLED, cascade por grupo) y tablas de Auth.js (`Account`, `Session`); generar migración inicial en `prisma/migrations/`
-- [ ] T009 [P] Configurar metadatos del festival único (nombre, país `AR`, zona `America/Argentina/Buenos_Aires`, días ordenados) en `config/festival.ts`
+- [X] T009 [P] Configurar metadatos del festival único (nombre, país `AR`, zona `America/Argentina/Buenos_Aires`, días ordenados) en `config/festival.ts`
 - [X] T010 [P] Prueba unitaria de conversión hora local del festival ↔ instante UTC (UTC−3 fijo; horas < 06:00 caen en el día calendario siguiente, FR-003, AC-107) en `tests/unit/domain/time.test.ts`
 - [X] T011 [P] Implementar conversión y formateo con `Intl` nativo en `src/domain/time.ts` (cierra T010)
 - [X] T012 [P] Cliente Prisma singleton en `src/server/db.ts`
