@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { festival } from "@config/festival";
+import { Avatar } from "@/components/avatar/Avatar";
 import { signOutAction } from "@/server/actions/auth";
 import { requirePageUser } from "@/server/page-session";
 
 export default function AppLayout({ children }: LayoutProps<"/">) {
   return (
     <div className="flex h-dvh flex-col">
-      <header className="flex shrink-0 items-center justify-between gap-4 border-b border-neutral-800 px-4 py-3">
+      <header className="flex shrink-0 flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-neutral-800 px-4 py-3">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
           <p className="font-bold">{festival.name}</p>
           <nav aria-label="Principal" className="flex gap-3 text-sm">
@@ -19,6 +20,9 @@ export default function AppLayout({ children }: LayoutProps<"/">) {
             </Link>
             <Link href="/invitaciones" className="underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-white">
               Invitaciones
+            </Link>
+            <Link href="/perfil" className="underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-white">
+              Perfil
             </Link>
           </nav>
         </div>
@@ -35,8 +39,11 @@ export default function AppLayout({ children }: LayoutProps<"/">) {
 async function UserMenu() {
   const user = await requirePageUser();
   return (
-    <div className="flex items-center gap-3">
-      <span>{user.username}</span>
+    <div className="flex min-w-0 items-center gap-3">
+      <span className="flex min-w-0 items-center gap-2">
+        <Avatar shape={user.avatarShape} color={user.avatarColor} />
+        <span className="max-w-[10rem] truncate">{user.username}</span>
+      </span>
       <form action={signOutAction}>
         <button
           type="submit"

@@ -14,3 +14,23 @@ export function randomAvatar(random: () => number = Math.random): { avatarShape:
     avatarColor: pick(AVATAR_COLORS, random).name as AvatarColor,
   };
 }
+
+export const SHAPE_LABELS: Record<AvatarShape, string> = {
+  circle: "círculo",
+  square: "cuadrado",
+  triangle: "triángulo",
+  diamond: "rombo",
+  star: "estrella",
+  hexagon: "hexágono",
+};
+
+export const COLOR_LABELS: Record<AvatarColor, string> = {
+  violet: "violeta",
+  fuchsia: "fucsia",
+  pink: "rosa",
+  orange: "naranja",
+  amber: "ámbar",
+  emerald: "esmeralda",
+  sky: "celeste",
+  blue: "azul",
+};

@@ -250,9 +250,9 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 
 ### Implementation for User Story 7
 
-- [ ] T079 [US7] Implementar acción `updateProfile` y página `/perfil` en `src/server/actions/profile.ts` y `src/app/(app)/perfil/page.tsx` (cierra T077)
-- [ ] T080 [P] [US7] Implementar componente de avatar con las 6 formas (círculo, cuadrado, triángulo, rombo, estrella, hexágono) en `src/components/avatar/Avatar.tsx` (parte de la unidad de T077)
-- [ ] T081 [US7] Implementar `GET /api/users` en `src/app/api/users/route.ts` y buscador en el formulario de invitación de `src/app/(app)/grupo/page.tsx` (cierra T078)
+- [X] T079 [US7] Implementar acción `updateProfile` y página `/perfil` en `src/server/actions/profile.ts` y `src/app/(app)/perfil/page.tsx` (cierra T077)
+- [X] T080 [P] [US7] Implementar componente de avatar con las 6 formas (círculo, cuadrado, triángulo, rombo, estrella, hexágono) en `src/components/avatar/Avatar.tsx` (parte de la unidad de T077)
+- [X] T081 [US7] Implementar `GET /api/users` en `src/app/api/users/route.ts` y buscador en el formulario de invitación de `src/app/(app)/grupo/page.tsx` (cierra T078)
 
 **Checkpoint**: todas las historias completas.
 

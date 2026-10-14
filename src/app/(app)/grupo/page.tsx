@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { festival } from "@config/festival";
 import { ActionForm } from "@/components/group/ActionForm";
+import { InviteUserInput } from "@/components/group/InviteUserInput";
 import { dangerButton, inputClass, primaryButton, secondaryButton } from "@/components/ui";
 import { defaultFestivalDay } from "@/domain/festival-days";
 import { formatFestivalTime } from "@/domain/time";
@@ -116,10 +117,7 @@ async function GroupContent({ searchParams }: { searchParams: PageProps<"/grupo"
         <section className="flex flex-col gap-3">
           <h2 className="text-lg font-bold">Invitar</h2>
           <ActionForm action={inviteAction} className="flex flex-wrap items-end gap-2">
-            <label className="flex flex-1 flex-col gap-1">
-              <span>Nombre de usuario a invitar</span>
-              <input name="username" required autoComplete="off" className={inputClass} />
-            </label>
+            <InviteUserInput />
             <button type="submit" className={primaryButton}>
               Invitar
             </button>
