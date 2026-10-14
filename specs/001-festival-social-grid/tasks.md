@@ -95,8 +95,8 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 > Las e2e se escriben primero y quedan en rojo hasta completar la UI; se commitean con la última tarea que las pone en verde.
 
 - [X] T024 [P] [US1] Prueba unitaria de validación de PIN (`^\d{6}$`: rechaza 5, 7 dígitos y letras; AC-06) y de nombre de usuario (`^[A-Za-z0-9._]{3,30}$`: 3 y 30 aceptan, 2 y 31 rechazan, espacios/acentos/ñ rechazan; AC-12, AC-13, FR-016) en `tests/unit/domain/credentials.test.ts`
-- [ ] T025 [P] [US1] Prueba de integración de `POST /api/auth/pin`: alta de usuario nuevo con sesión (AC-07), login case-insensitive "aNA"→"Ana" sin duplicar (AC-08), PIN incorrecto (AC-09), PIN solo como hash (AC-20), cuenta Google rechazada (AC-21) en `tests/integration/auth/pin-login.test.ts`
-- [ ] T026 [P] [US1] Prueba de integración de bloqueo con reloj inyectado: 4 fallos + correcto entra (AC-15), 5 fallos + correcto antes de 15:00 rechaza (AC-16), a 15:00 entra (AC-17), reinicio del contador (AC-18), respuesta idéntica PIN incorrecto vs bloqueado (AC-19) en `tests/integration/auth/pin-lockout.test.ts`
+- [X] T025 [P] [US1] Prueba de integración de `POST /api/auth/pin`: alta de usuario nuevo con sesión (AC-07), login case-insensitive "aNA"→"Ana" sin duplicar (AC-08), PIN incorrecto (AC-09), PIN solo como hash (AC-20), cuenta Google rechazada (AC-21) en `tests/integration/auth/pin-login.test.ts`
+- [X] T026 [P] [US1] Prueba de integración de bloqueo con reloj inyectado: 4 fallos + correcto entra (AC-15), 5 fallos + correcto antes de 15:00 rechaza (AC-16), a 15:00 entra (AC-17), reinicio del contador (AC-18), respuesta idéntica PIN incorrecto vs bloqueado (AC-19) en `tests/integration/auth/pin-lockout.test.ts`
 - [ ] T027 [P] [US1] Prueba de integración de cierre de sesión: tras `signOut` la sesión se elimina y el contenido se deniega (AC-10) en `tests/integration/auth/sign-out.test.ts`
 - [ ] T028 [P] [US1] Prueba de integración de login Google exitoso con proveedor simulado (AC-05); falla o cancelación vuelve a `/login` con mensaje y sin crear cuenta (FR-096); primer acceso Google: sin `username` no accede hasta fijarlo; nombre duplicado case-insensitive rechazado (AC-11, AC-14) en `tests/integration/auth/google-first-access.test.ts`
 - [ ] T029 [P] [US1] Prueba de integración de denegación sin sesión para line-up, detalle, grilla, grupo, invitaciones y exportación (AC-98, AC-99, AC-100) en `tests/integration/access/unauthenticated.test.ts`
@@ -105,8 +105,8 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 ### Implementation for User Story 1
 
 - [X] T031 [US1] Implementar validaciones de credenciales en `src/domain/credentials.ts` (cierra T024)
-- [ ] T032 [US1] Implementar servicio de login/alta por PIN con Argon2id, bloqueo atómico y respuesta uniforme `401 {"error":"invalid_credentials"}` en `src/server/auth/pin-service.ts` (parte de la unidad de T025, T026)
-- [ ] T033 [US1] Implementar `POST /api/auth/pin` que crea la fila `Session` y la cookie de Auth.js en `src/app/api/auth/pin/route.ts` (cierra T025, T026)
+- [X] T032 [US1] Implementar servicio de login/alta por PIN con Argon2id, bloqueo atómico y respuesta uniforme `401 {"error":"invalid_credentials"}` en `src/server/auth/pin-service.ts` (parte de la unidad de T025, T026)
+- [X] T033 [US1] Implementar `POST /api/auth/pin` que crea la fila `Session` y la cookie de Auth.js en `src/app/api/auth/pin/route.ts` (cierra T025, T026)
 - [ ] T034 [US1] Implementar acción `setUsername` y página `/bienvenida` en `src/app/(auth)/bienvenida/page.tsx` y `src/server/actions/username.ts` (cierra T028)
 - [ ] T035 [US1] Implementar página `/login` (Google + usuario/PIN, sin opción de email; FR-018) en `src/app/(auth)/login/page.tsx` (parte de la unidad de T030)
 - [ ] T036 [US1] Implementar acción `signOut` y botón de cierre en el layout autenticado en `src/app/(app)/layout.tsx` (cierra T027, T030)
