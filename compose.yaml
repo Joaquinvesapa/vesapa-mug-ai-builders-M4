@@ -1,0 +1,22 @@
+# Local development database. The password comes from POSTGRES_PASSWORD in .env.local.
+name: festival-social-grid
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: festival
+      POSTGRES_DB: festival
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.local}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U festival -d festival"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+
+volumes:
+  db-data:

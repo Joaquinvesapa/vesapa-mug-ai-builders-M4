@@ -6,13 +6,15 @@ Guía para comprobar el MVP de punta a punta. Los scripts se definirán en `pack
 
 - Node.js LTS y el gestor de paquetes del proyecto.
 - Docker accesible sin `sudo` (Testcontainers). Si no lo está, el propietario debe configurarlo.
-- Variables de entorno en `.env.local` (no versionado), según `.env.example`: `DATABASE_URL`, `AUTH_SECRET`, `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`. Las carga el propietario.
+- Variables de entorno en `.env.local` (no versionado), según `.env.example`: `POSTGRES_PASSWORD`, `DATABASE_URL`, `AUTH_SECRET` y, opcionalmente, `AUTH_GOOGLE_ID` y `AUTH_GOOGLE_SECRET`. Las carga el propietario.
 
 ## Puesta en marcha
 
-1. Instalar dependencias y aplicar migraciones de Prisma en la base de desarrollo.
-2. Importar el line-up: `npm run import:lineup -- data/lineup.csv`.
-3. Iniciar: `npm run dev`.
+1. `npm install`.
+2. Base de desarrollo: `npm run db:up` (Docker Compose, `compose.yaml`; contraseña desde `POSTGRES_PASSWORD` en `.env.local`).
+3. Migraciones: `npm run db:migrate`.
+4. Importar el line-up: `npm run import:lineup -- data/lineup.csv`.
+5. Iniciar: `npm run dev`.
 
 ## Validaciones
 
