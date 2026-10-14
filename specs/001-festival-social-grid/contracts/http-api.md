@@ -34,16 +34,18 @@ No existe ruta para leer el perfil de otra persona (FR-023).
 
 | Acción | Quién | Errores |
 |---|---|---|
-| `createGroup(name)` | sin grupo | `already_in_group`, `invalid_name` |
-| `renameGroup(name)` | propietario actual | `forbidden` |
+| `createGroup(name)` | sin grupo; invalida sus invitaciones vigentes de otros grupos | `already_in_group`, `invalid_name` |
+| `renameGroup(name)` | propietario actual | `forbidden`, `invalid_name` |
 | `invite(username)` | propietario actual | `forbidden`, `user_not_found`, `user_in_group`, `group_full`, `already_invited` |
-| `cancelInvitation(id)` | propietario actual | `forbidden`, `not_pending` |
-| `acceptInvitation(id)` | destinatario | `not_found`, `expired`, `already_in_group`, `group_full` |
+| `cancelInvitation(id)` | propietario actual del grupo de la invitación | `forbidden`, `not_pending` |
+| `acceptInvitation(id)` | destinatario; invalida sus otras invitaciones vigentes | `not_found`, `expired`, `already_in_group`, `group_full` |
 | `rejectInvitation(id)` | destinatario | `not_found`, `expired` |
-| `leaveGroup()` | miembro no propietario | `owner_cannot_leave` |
-| `removeMember(userId)` | propietario actual | `forbidden`, `not_member` |
+| `leaveGroup()` | miembro no propietario | `owner_cannot_leave`, `not_member` |
+| `removeMember(userId)` | propietario actual (no a sí mismo) | `forbidden`, `not_member`, `owner_cannot_leave` |
 | `transferOwnership(userId)` | propietario actual | `forbidden`, `not_member` |
 | `deleteGroup()` | propietario actual | `forbidden` |
+
+El grupo se deduce siempre de la membresía de la sesión; ninguna acción recibe un id de grupo. Una invitación de otro destinatario responde `not_found` (no revela existencia).
 
 Páginas: `/grupo` (miembros; invitaciones vigentes visibles solo para el propietario), `/invitaciones` (vigentes recibidas).
 
