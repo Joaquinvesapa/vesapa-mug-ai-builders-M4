@@ -10,9 +10,12 @@ export const MOVE_TOLERANCE_PX = 10;
  * and moving further is a scroll that triggers nothing (FR-035).
  */
 export function useBlockGestures({ onTap, onLongPress }: { onTap?: () => void; onLongPress: () => void }) {
-  const state = useRef({ timer: 0, x: 0, y: 0, suppressClick: false });
+  const state = useRef({ timer: 0, x: 0, y: 0, pressed: false, suppressClick: false });
 
-  const cancel = () => window.clearTimeout(state.current.timer);
+  const cancel = () => {
+    state.current.pressed = false;
+    window.clearTimeout(state.current.timer);
+  };
 
   return {
     onPointerDown(event: PointerEvent) {
@@ -21,6 +24,7 @@ export function useBlockGestures({ onTap, onLongPress }: { onTap?: () => void; o
       cancel();
       s.x = event.clientX;
       s.y = event.clientY;
+      s.pressed = true;
       s.suppressClick = false;
       s.timer = window.setTimeout(() => {
         s.suppressClick = true;
@@ -29,6 +33,7 @@ export function useBlockGestures({ onTap, onLongPress }: { onTap?: () => void; o
     },
     onPointerMove(event: PointerEvent) {
       const s = state.current;
+      if (!s.pressed) return;
       if (Math.hypot(event.clientX - s.x, event.clientY - s.y) > MOVE_TOLERANCE_PX) {
         s.suppressClick = true;
         cancel();

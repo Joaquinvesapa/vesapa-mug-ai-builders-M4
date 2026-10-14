@@ -7,22 +7,32 @@ import { useBlockGestures } from "./useBlockGestures";
 type Props = {
   block: BlockView;
   selected?: boolean;
+  status?: string;
+  warned?: boolean;
   onToggle?: (showId: string) => void;
   onOpenDetail: (showId: string) => void;
 };
 
-export function ShowBlock({ block, selected = false, onToggle, onOpenDetail }: Props) {
+export function ShowBlock({ block, selected = false, status, warned = false, onToggle, onOpenDetail }: Props) {
   const gestures = useBlockGestures({
     onTap: onToggle ? () => onToggle(block.showId) : undefined,
     onLongPress: () => onOpenDetail(block.showId),
   });
 
   return (
-    <div className="absolute inset-x-1" style={{ top: block.top, height: block.height }}>
+    <div
+      className="absolute px-0.5"
+      style={{
+        top: block.top,
+        height: block.height,
+        left: `${(block.lane / block.lanes) * 100}%`,
+        width: `${100 / block.lanes}%`,
+      }}
+    >
       <button
         type="button"
         aria-pressed={selected}
-        aria-label={`${block.artist}, ${block.stageName}, ${block.startLabel} a ${block.endLabel}`}
+        aria-label={`${block.artist}, ${block.stageName}, ${block.startLabel} a ${block.endLabel}${status ? `, ${status}` : ""}`}
         style={{ "--stage-color": block.colorHex } as CSSProperties}
         className={`flex h-full w-full touch-pan-x touch-pan-y select-none flex-col overflow-hidden rounded-md px-1.5 py-1 pr-7 text-left focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-white ${
           selected
@@ -31,13 +41,23 @@ export function ShowBlock({ block, selected = false, onToggle, onOpenDetail }: P
         }`}
         {...gestures}
       >
-        <span className="truncate text-sm leading-5 font-bold">{block.artist}</span>
-        {block.showTime && (
-          <span className="truncate text-xs leading-4">
-            {block.startLabel}–{block.endLabel}
+        <span className="truncate text-sm leading-5 font-bold">
+          {selected && <span aria-hidden="true">✓ </span>}
+          {block.artist}
+        </span>
+        {(block.showTime || status) && (
+          <span className="truncate text-xs leading-4" suppressHydrationWarning>
+            {block.showTime && `${block.startLabel}–${block.endLabel}`}
+            {block.showTime && status && " · "}
+            {status}
           </span>
         )}
       </button>
+      {warned && (
+        <span role="img" aria-label="Se superpone" className="absolute right-0.5 bottom-0.5 text-xs">
+          ⚠
+        </span>
+      )}
       <button
         type="button"
         aria-label={`Ver detalle de ${block.artist}`}

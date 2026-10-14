@@ -11,11 +11,15 @@ type Props = {
   view: DayView;
   selectedIds?: ReadonlySet<string>;
   onToggle?: (showId: string) => void;
+  /** Temporal status label of the person's own shows (FR-093). */
+  statusOf?: (showId: string) => string | undefined;
+  /** Shows involved in an overlap of the person's selection (FR-092). */
+  warnedIds?: ReadonlySet<string>;
   /** Extra actions rendered in the detail dialog (e.g. add/remove from the personal grid). */
   detailActions?: (block: BlockView) => ReactNode;
 };
 
-export function DayGrid({ view, selectedIds, onToggle, detailActions }: Props) {
+export function DayGrid({ view, selectedIds, onToggle, statusOf, warnedIds, detailActions }: Props) {
   const [detailId, setDetailId] = useState<string | null>(null);
   const closeDetail = useCallback(() => setDetailId(null), []);
   const detail = view.blocks.find((b) => b.showId === detailId);
@@ -65,6 +69,8 @@ export function DayGrid({ view, selectedIds, onToggle, detailActions }: Props) {
                         key={block.showId}
                         block={block}
                         selected={selectedIds?.has(block.showId)}
+                        status={statusOf?.(block.showId)}
+                        warned={warnedIds?.has(block.showId)}
                         onToggle={onToggle}
                         onOpenDetail={setDetailId}
                       />

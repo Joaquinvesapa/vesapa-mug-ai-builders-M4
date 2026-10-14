@@ -1,12 +1,13 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { festival } from "@config/festival";
-import { DayGrid } from "@/components/grid/DayGrid";
 import { DaySelector } from "@/components/grid/DaySelector";
 import { GridSkeleton } from "@/components/grid/GridSkeleton";
+import { PersonalDayGrid } from "@/components/grid/PersonalDayGrid";
 import { buildDayView } from "@/domain/grid-view";
 import { listShowsForDay, listStages } from "@/server/lineup";
 import { requirePageUser } from "@/server/page-session";
+import { listSelectedShowIds } from "@/server/selection";
 
 export default function DayPage({ params }: PageProps<"/grilla/[dia]">) {
   return (
@@ -21,9 +22,13 @@ export default function DayPage({ params }: PageProps<"/grilla/[dia]">) {
 async function DayContent({ params }: { params: PageProps<"/grilla/[dia]">["params"] }) {
   const { dia } = await params;
   if (!festival.days.includes(dia)) notFound();
-  await requirePageUser();
+  const user = await requirePageUser();
 
-  const [stages, shows] = await Promise.all([listStages(), listShowsForDay(dia)]);
+  const [stages, shows, selectedIds] = await Promise.all([
+    listStages(),
+    listShowsForDay(dia),
+    listSelectedShowIds(user.id, dia),
+  ]);
   const view = buildDayView(dia, stages, shows);
 
   return (
@@ -33,7 +38,7 @@ async function DayContent({ params }: { params: PageProps<"/grilla/[dia]">["para
       {view.isEmpty ? (
         <p className="p-8 text-center text-neutral-300">No hay shows este día</p>
       ) : (
-        <DayGrid view={view} />
+        <PersonalDayGrid view={view} initialSelectedIds={selectedIds} serverNow={new Date().toISOString()} />
       )}
     </>
   );

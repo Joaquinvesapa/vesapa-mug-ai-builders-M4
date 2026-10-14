@@ -24,3 +24,11 @@ export async function requirePageSession(): Promise<User> {
   if (!user) redirect("/login");
   return user;
 }
+
+/** Resolves the user of a Server Function call; throws when there is no valid session. */
+export async function requireActionUser(): Promise<AuthenticatedUser> {
+  const cookieHeader = (await cookies()).toString();
+  const user = await getSessionUser(readSessionToken(cookieHeader));
+  if (!user || !user.username) throw new Error("unauthenticated");
+  return user as AuthenticatedUser;
+}
