@@ -13,13 +13,17 @@ export default defineConfig({
   },
   projects: [
     { name: "mobile-chromium", use: { ...devices["Pixel 7"], viewport: { width: 375, height: 812 } } },
-    { name: "mobile-webkit", use: { ...devices["iPhone 15"], viewport: { width: 375, height: 812 } } },
     { name: "desktop-chromium", use: { ...devices["Desktop Chrome"] } },
     { name: "desktop-firefox", use: { ...devices["Desktop Firefox"] } },
+    // WebKit needs host libraries that are missing locally; enable with PW_WEBKIT=1 where available.
+    ...(process.env.PW_WEBKIT
+      ? [{ name: "mobile-webkit", use: { ...devices["iPhone 15"], viewport: { width: 375, height: 812 } } }]
+      : []),
   ],
   webServer: {
-    command: `npm run build && npm run start -- --port ${port}`,
-    url: `http://localhost:${port}`,
+    command: `npm run build && E2E_PORT=${port} npx tsx scripts/e2e-server.mts`,
+    // 401 without session counts as ready; independent of which pages exist.
+    url: `http://localhost:${port}/api/time`,
     reuseExistingServer: !process.env.CI,
     timeout: 240_000,
   },

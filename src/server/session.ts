@@ -46,3 +46,9 @@ export async function requireApiUser(request: Request, now = new Date()): Promis
   }
   return { user };
 }
+
+/** Signs out by deleting the database session (AC-10). */
+export async function endSession(sessionToken: string | undefined): Promise<void> {
+  if (!sessionToken) return;
+  await db.session.deleteMany({ where: { sessionToken } });
+}
