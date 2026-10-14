@@ -45,5 +45,6 @@ Se verificó que el control puede fallar: con umbrales de 1 ms, k6 reporta los u
 
 - **WebKit / Safari iOS (FR-084):** el navegador no arranca en esta máquina por bibliotecas del sistema faltantes que requieren `sudo`; las e2e corren con `PW_WEBKIT=1` donde estén disponibles (por ejemplo, la imagen oficial de Playwright).
 - **Acceso con Google real (AC-05):** requiere credenciales OAuth en `.env.local`; cubierto con el adaptador simulado en integración.
-- **RNF-07 / AC-22 (TLS, T086):** depende del hosting.
-- **SC-008 (T087):** prueba de uso manual con 5 personas, a cargo del propietario.
+- **RNF-07 / AC-22 (TLS, T086):** diferido por el propietario; el hosting queda fuera durante el desarrollo.
+- **SC-008 (T087):** prueba de uso manual con 5 personas, diferida por el propietario.
+- **Integración continua:** diferida por el propietario; las suites se ejecutan localmente.

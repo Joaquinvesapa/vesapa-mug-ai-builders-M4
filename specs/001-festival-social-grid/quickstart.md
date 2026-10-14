@@ -23,7 +23,7 @@ Guía para comprobar el MVP de punta a punta. Los scripts se definirán en `pack
 | Lógica de dominio y componentes (tiempo, layout, superposición, coincidencias, estados en vivo) | `npm run test:unit` | AC-34, AC-41/42, AC-70…77, AC-80…86, AC-108, AC-110 en verde |
 | Importador, auth PIN, grupos, permisos, exportación (píxeles reales), privacidad | `npm run test:integration` (Docker) | AC-01/03/109, AC-06…21, AC-23…30, AC-44…79, AC-87…95, AC-98…104, AC-111/112 en verde |
 | Flujos en navegador: acceso, grilla, gestos, grupos, vista grupal, descarga de PNG, perfil, accesibilidad | `npm run test:e2e` (Chromium y Firefox; WebKit con `PW_WEBKIT=1`) | AC-05, AC-07, AC-10, AC-35…43, AC-105…107, FR-085, FR-090…097 en verde |
-| Carga (RNF-01, RNF-03) | `npm run test:load` (Docker; k6 contra app y base con 2 vCPU y 4 GB en total) | p95 < 2 s por operación de consulta y < 5 s en exportación; el comando falla si se cruza un umbral |
+| Carga (RNF-01, RNF-03) | `npm run test:load` (Docker; k6 contra app y base con 2 vCPU y 4 GB en total; local, sin CI) | p95 < 2 s por operación de consulta y < 5 s en exportación; el comando falla si se cruza un umbral |
 | Importación inválida | importar un CSV sin escenario o con 6 escenarios | el comando falla y no quedan shows nuevos (AC-03, AC-109) |
 | Acceso | entrar con usuario nuevo + PIN, cerrar sesión, pedir `/grilla/...` | redirige a `/login` (AC-10) |
 | Grupo | crear grupo, invitar a otra cuenta, aceptar, ver la vista grupal | conteo y coincidencia correctos (AC-70, AC-73) |
@@ -31,5 +31,6 @@ Guía para comprobar el MVP de punta a punta. Los scripts se definirán en `pack
 
 ## Bloqueadas por decisiones pendientes
 
-- Ejecución automática de `npm run test:load` en CI: requiere elegir el proveedor de CI.
-- RNF-07 (TLS): depende del hosting elegido.
+- Integración continua: diferida por decisión del propietario; todas las suites, incluida `npm run test:load`, se ejecutan localmente.
+- RNF-07 (TLS, T086): diferido junto con el hosting mientras el proyecto está en desarrollo.
+- SC-008 (prueba de uso con 5 personas, T087): diferida por decisión del propietario.

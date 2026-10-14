@@ -71,7 +71,7 @@ Decisiones de stack confirmadas por el propietario el 2026-10-13: Prisma, Auth.j
 | Herramienta de pruebas de carga (RNF-01/03) | **Confirmado (2026-10-14)**: k6 `grafana/k6:2.3.0` en Docker, contra un stack aislado con app (1,5 CPU, 3 GB) y base (0,5 CPU, 1 GB) dentro del presupuesto de 2 vCPU y 4 GB | autocannon, script propio en Node (descartados) |
 | Hosting / TLS (RNF-07) | **PENDIENTE** (Vercel candidato) | — |
 
-Queda pendiente solo el hosting (y el proveedor de CI); las unidades que dependan de ellos quedan bloqueadas hasta su decisión.
+Hosting e integración continua quedan diferidos por decisión del propietario (2026-10-14) mientras el proyecto está en desarrollo; las unidades que dependan de ellos quedan bloqueadas hasta su decisión.
 
 ## 9. Convenciones de Next.js 16.4 (T001, leídas en `node_modules/next/dist/docs/`)
 
