@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { festival } from "@config/festival";
+import { ExportDialog } from "@/components/export/ExportDialog";
 import { DaySelector } from "@/components/grid/DaySelector";
 import { GridSkeleton } from "@/components/grid/GridSkeleton";
 import { PersonalDayGrid } from "@/components/grid/PersonalDayGrid";
@@ -33,7 +34,10 @@ async function DayContent({ params }: { params: PageProps<"/grilla/[dia]">["para
 
   return (
     <>
-      <DaySelector days={festival.days} current={dia} basePath="/grilla" />
+      <div className="flex flex-wrap items-center justify-between gap-2 pr-4">
+        <DaySelector days={festival.days} current={dia} basePath="/grilla" />
+        <ExportDialog kind="personal" days={festival.days} currentDay={dia} />
+      </div>
       <h1 className="sr-only">Grilla del {view.dayLabel}</h1>
       {view.isEmpty ? (
         <p className="p-8 text-center text-neutral-300">No hay shows este día</p>

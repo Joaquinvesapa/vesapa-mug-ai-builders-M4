@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
 import { festival } from "@config/festival";
+import { ExportDialog } from "@/components/export/ExportDialog";
 import { DaySelector } from "@/components/grid/DaySelector";
 import { GridSkeleton } from "@/components/grid/GridSkeleton";
 import { GroupDayView } from "@/components/group/GroupDayView";
@@ -33,7 +34,10 @@ async function GroupViewContent({ params }: { params: PageProps<"/grupo/vista/[d
   return (
     <>
       <h1 className="px-4 pt-3 text-lg font-bold">Coincidencias de {group.groupName}</h1>
-      <DaySelector days={festival.days} current={dia} basePath="/grupo/vista" />
+      <div className="flex flex-wrap items-center justify-between gap-2 pr-4">
+        <DaySelector days={festival.days} current={dia} basePath="/grupo/vista" />
+        <ExportDialog kind="group" days={festival.days} currentDay={dia} />
+      </div>
       <GroupDayView view={view} rows={group.shows} serverNow={new Date().toISOString()} />
     </>
   );

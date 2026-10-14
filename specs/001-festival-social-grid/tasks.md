@@ -231,7 +231,7 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 - [X] T073 [US6] Implementar cálculo de escala y tamaños mínimos de fuente sobre `grid-layout` en `src/export/export-layout.ts` (cierra T071)
 - [X] T074 [US6] Implementar plantilla Satori de la grilla (personal y grupal) en `src/export/GridImage.tsx` (parte de la unidad de T072)
 - [X] T075 [US6] Implementar `GET /api/export` (validación con zod, autorización, Satori → resvg) en `src/app/api/export/route.ts` (cierra T072)
-- [ ] T076 [US6] Implementar diálogo de exportación (día, formato, opción explícita de nombres) en `src/components/export/ExportDialog.tsx`
+- [X] T076 [US6] Implementar diálogo de exportación (día, formato, opción explícita de nombres) en `src/components/export/ExportDialog.tsx`, con e2e en `tests/e2e/export.spec.ts`
 
 **Checkpoint**: exportación lista.
 
