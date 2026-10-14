@@ -52,9 +52,9 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 - [X] T010 [P] Prueba unitaria de conversión hora local del festival ↔ instante UTC (UTC−3 fijo; horas < 06:00 caen en el día calendario siguiente, FR-003, AC-107) en `tests/unit/domain/time.test.ts`
 - [X] T011 [P] Implementar conversión y formateo con `Intl` nativo en `src/domain/time.ts` (cierra T010)
 - [X] T012 [P] Cliente Prisma singleton en `src/server/db.ts`
-- [ ] T013 Configurar Auth.js con proveedor Google, adaptador Prisma y estrategia de sesión en base de datos en `src/server/auth.ts` y `src/app/api/auth/[...nextauth]/route.ts`
-- [ ] T014 Prueba de integración del guard de sesión: sin sesión, páginas redirigen a `/login` y APIs responden 401 sin contenido; con sesión sin `username`, redirige a `/bienvenida` en `tests/integration/auth/guard.test.ts`
-- [ ] T015 Implementar `requireUser()` / `requireUserWithUsername()` y protección de rutas en `src/server/session.ts` y `src/proxy.ts` (o el equivalente que indique la documentación de la versión instalada) (cierra T014)
+- [X] T013 Configurar Auth.js con proveedor Google, adaptador Prisma y estrategia de sesión en base de datos en `src/server/auth.ts` y `src/app/api/auth/[...nextauth]/route.ts`
+- [X] T014 Prueba de integración del guard de sesión: sin sesión, páginas redirigen a `/login` y APIs responden 401 sin contenido; con sesión sin `username`, redirige a `/bienvenida` en `tests/integration/auth/guard.test.ts`
+- [X] T015 Implementar `requireUser()` / `requireUserWithUsername()` y protección de rutas en `src/server/session.ts` y `src/proxy.ts` (o el equivalente que indique la documentación de la versión instalada) (cierra T014)
 - [ ] T016 [P] Prueba de integración de `GET /api/time` (requiere sesión, devuelve `{ now }` ISO UTC) en `tests/integration/time.test.ts`
 - [ ] T017 [P] Implementar `GET /api/time` en `src/app/api/time/route.ts` (cierra T016)
 - [X] T018 [P] Paleta fija de 5 colores de escenario y 8 de avatar como tokens Tailwind en `src/domain/palettes.ts`
