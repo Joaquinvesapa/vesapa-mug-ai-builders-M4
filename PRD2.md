@@ -27,13 +27,14 @@ Festival Social Grid es un MVP autenticado para consultar el line-up de un únic
 | Aprovisionamiento | Configuración e importador CSV son operaciones técnicas; no existe carga, edición ni publicación desde la interfaz. |
 | Identidad | Todo el contenido requiere autenticación. Google o nombre de usuario con PIN de 6 dígitos permiten el acceso; son cuentas separadas (una cuenta de Google no tiene PIN). No se usa email para el acceso. El perfil completo es privado; el descubrimiento expone solo nombre de usuario y avatar. |
 | Avatar | Se elige de un set de formas abstractas y se le puede cambiar el color. No hay subida de archivos. |
-| Selección | Binaria: un usuario selecciona un show o no. |
+| Grilla | El line-up se muestra como grilla de doble entrada por día, similar a las que publican los festivales: escenarios como columnas y horario como eje vertical. Cada show es un bloque cuyo alto es proporcional a su duración. La forma de la grilla es fija (no se reacomoda como lista) y, si no entra en pantalla, se desplaza vertical y horizontalmente en cualquier tamaño de pantalla. Cada escenario tiene un color asignado automáticamente desde una paleta fija. |
+| Selección | Binaria: un usuario selecciona un show o no. Se selecciona o deselecciona tocando su bloque en la grilla; mantener presionado el bloque abre el detalle. La grilla personal es la misma grilla del día con los shows seleccionados resaltados. |
 | Grupos | Privados, máximo 15 miembros incluido el propietario. Una persona pertenece como máximo a un grupo. El propietario puede renombrarlo y eliminarlo. |
 | Invitaciones | Solo por nombre de usuario (no por email), visibles dentro de la app, vigentes 15 minutos. Las vigentes cuentan para el límite de 15. |
 | Coincidencia | Existe solo cuando al menos dos miembros seleccionaron el mismo show. |
 | Día del show | Cada show pertenece al día de festival indicado en el CSV, aunque termine después de medianoche (ej.: un show del sábado a la 1 am del domingo pertenece al sábado). |
 | Tiempo | El servidor entrega el instante UTC autoritativo; la comparación usa la zona IANA fija `America/Argentina/Buenos_Aires`. No se usa la hora del dispositivo ni la zona local del servidor. |
-| Exportación | PNG personal y grupal en dos formatos fijos. La grupal parte de los shows de quien la solicita, incorpora conteos y puede incluir nombres. Cada PNG corresponde a un día elegido antes de descargar y lo muestra como timeline de doble entrada (horario × escenario). No hay máximo de shows: se muestra la grilla completa de ese día. |
+| Exportación | PNG personal y grupal en dos formatos fijos. Cada PNG corresponde a un día elegido antes de descargar y reproduce la grilla completa de ese día con la misma forma que en la app: los shows seleccionados por quien la solicita se ven resaltados y los no seleccionados, opacados. La grilla se escala para entrar completa en la imagen. La grupal agrega conteos y puede incluir nombres. |
 | Objetivos | Cualitativos (sin métricas de adopción, por no haber analítica). |
 
 ## Objetivos
@@ -51,6 +52,7 @@ Festival Social Grid es un MVP autenticado para consultar el line-up de un únic
 - **RF-02:** El sistema debe leer los metadatos del festival desde configuración de desarrollo.
 - **RF-03:** El importador debe cargar el line-up desde un CSV versionado ejecutado por desarrollo.
 - **RF-04:** El importador debe rechazar la carga completa cuando un campo requerido de algún show es inválido. Campos requeridos: id, artista, descripción, día, escenario, inicio y finalización.
+- **RF-79:** El importador debe rechazar la carga completa cuando el CSV contiene más de 5 escenarios distintos.
 - **RF-71:** El sistema debe asignar cada show al día de festival indicado en el CSV, aunque su finalización ocurra después de medianoche.
 
 ### Autenticación y cuenta
@@ -74,15 +76,21 @@ Festival Social Grid es un MVP autenticado para consultar el line-up de un únic
 - **RF-70:** El sistema debe impedir que una persona lea o modifique el perfil completo de otra.
 
 ### Line-up y detalle
-- **RF-20:** El sistema debe mostrar el line-up a personas autenticadas.
-- **RF-21:** El sistema debe permitir filtrar el line-up por día.
-- **RF-22:** El sistema debe permitir filtrar el line-up por escenario.
+- **RF-20:** El sistema debe mostrar el line-up a personas autenticadas como una grilla por día.
+- **RF-21:** El sistema debe permitir elegir el día de festival cuya grilla se muestra.
+- **RF-22:** El sistema debe asignar a cada escenario un color distinto, tomado automáticamente de una paleta fija, y usarlo en su encabezado y en los bloques de sus shows. La paleta tiene 5 colores y se asignan en el orden de aparición de los escenarios en el CSV.
 - **RF-23:** El sistema debe mostrar el detalle de un show: artista, descripción, día, escenario, inicio y finalización.
+- **RF-72:** La grilla debe mostrar una columna por cada escenario del festival y un eje vertical de horario que cubra desde el primer inicio hasta el último final del día. Las columnas siguen el orden de aparición de los escenarios en el CSV.
+- **RF-73:** Cada show debe mostrarse como un bloque en la columna de su escenario, ubicado en su horario de inicio y con alto proporcional a su duración, indicando artista, inicio y finalización.
+- **RF-74:** La grilla debe conservar su forma (columnas, escala horaria y posiciones) en cualquier tamaño de pantalla, sin convertirse en lista.
+- **RF-75:** Cuando la grilla no entra en la pantalla, el sistema debe permitir desplazarla vertical y horizontalmente.
+- **RF-76:** El sistema debe abrir el detalle de un show al mantener presionado su bloque.
+- **RF-77:** El eje horario debe mostrar los shows que terminan después de medianoche a continuación del día al que pertenecen (RF-71).
 
 ### Grilla personal
-- **RF-24:** El sistema debe permitir agregar un show a la grilla personal desde el line-up o el detalle.
-- **RF-25:** El sistema debe permitir quitar un show de la grilla personal desde el line-up o el detalle.
-- **RF-26:** El sistema debe agrupar por día los shows seleccionados.
+- **RF-24:** El sistema debe agregar un show a la grilla personal al tocar su bloque no seleccionado en la grilla, o desde el detalle.
+- **RF-25:** El sistema debe quitar un show de la grilla personal al tocar su bloque seleccionado en la grilla, o desde el detalle.
+- **RF-26:** El sistema debe distinguir visualmente en la grilla los bloques seleccionados de los no seleccionados.
 - **RF-27:** El sistema debe advertir los intervalos superpuestos entre shows seleccionados.
 - **RF-28:** El sistema debe conservar las selecciones superpuestas.
 
@@ -121,14 +129,16 @@ Festival Social Grid es un MVP autenticado para consultar el line-up de un únic
 - **RF-56:** El sistema debe actualizar los estados temporales de una grilla abierta sin recarga manual (plazo en RNF-02).
 
 ### Exportación
-- **RF-57:** El sistema debe generar un PNG de la grilla personal de un día elegido, con solo los shows seleccionados de ese día, en un timeline de doble entrada (horario × escenario) con todos los escenarios como columnas.
-- **RF-58:** El sistema debe generar un PNG grupal con los shows seleccionados por la persona solicitante.
-- **RF-59:** El PNG grupal debe incluir, para cada show, el conteo de miembros del grupo que también lo seleccionaron.
+- **RF-57:** El sistema debe generar un PNG de la grilla personal de un día elegido que reproduzca la grilla completa de ese día (todos los escenarios, todos los shows, colores de escenario y escala horaria), con los shows seleccionados resaltados y los no seleccionados opacados.
+- **RF-58:** El sistema debe generar un PNG grupal con la misma grilla de RF-57, resaltando los shows seleccionados por la persona solicitante.
+- **RF-59:** El PNG grupal debe incluir, para cada show resaltado, el conteo de miembros del grupo que lo seleccionaron.
+- **RF-78:** El PNG debe escalar la grilla del día para que entre completa dentro de las dimensiones elegidas, conservando sus proporciones.
+- **RF-80:** En el PNG, el nombre del artista debe tener al menos 20 px de alto de fuente y el horario al menos 16 px; si el texto no entra en su bloque, el horario se omite y luego el nombre se trunca con “…”, sin reducir la fuente por debajo de esos mínimos.
 - **RF-60:** El sistema debe ofrecer en la exportación grupal una opción explícita para incluir nombres de usuario.
 - **RF-61:** El PNG grupal no debe mostrar nombres de un show seleccionado por menos de dos miembros, aun con la opción activada.
 - **RF-62:** El sistema debe ofrecer exportación en 1080 × 1920 px.
 - **RF-63:** El sistema debe ofrecer exportación en 1080 × 1350 px.
-- **RF-64:** El PNG debe incluir todos los shows seleccionados del día exportado, sin tope de cantidad.
+- **RF-64:** El PNG debe incluir todos los shows del día exportado, sin tope de cantidad.
 
 ### Autenticación y autorización del contenido
 - **RF-65:** El sistema debe requerir autenticación para todo contenido, incluidos line-up y detalle.
@@ -158,6 +168,7 @@ Festival Social Grid es un MVP autenticado para consultar el line-up de un únic
 - **AC-01 (RF-01, RF-02, RF-03):** Dado un despliegue con metadatos de un festival argentino y un CSV válido, cuando desarrollo ejecuta el importador, entonces queda disponible exactamente 1 festival con todos los shows del CSV.
 - **AC-02 (RF-01):** Dado el festival aprovisionado, cuando una persona recorre la interfaz, entonces encuentra 0 elementos de elección o gestión de festivales.
 - **AC-03 (RF-04, RNF-06):** Dado un CSV con un show sin escenario, cuando desarrollo ejecuta el importador, entonces el proceso falla y quedan 0 shows de esa ejecución en la base.
+- **AC-109 (RF-79, RNF-06):** Dado un CSV con 6 escenarios distintos, cuando desarrollo ejecuta el importador, entonces el proceso falla y quedan 0 shows de esa ejecución en la base.
 - **AC-04 (RF-71):** Dado un show del día sábado que termina a la 1:00 del domingo en el CSV, cuando se filtra por sábado, entonces el show aparece y no aparece al filtrar por domingo.
 
 ### Autenticación
@@ -191,18 +202,21 @@ Festival Social Grid es un MVP autenticado para consultar el line-up de un únic
 - **AC-30 (RF-70, RNF-05):** Dadas A y B, cuando A intenta modificar el perfil de B, entonces se deniega y el perfil de B no cambia.
 
 ### Line-up y detalle
-- **AC-31 (RF-20):** Dada una persona autenticada, cuando abre el line-up, entonces ve todos los shows del festival.
-- **AC-32 (RF-21):** Dado un filtro de día activo, cuando se consulta, entonces solo aparecen shows de ese día.
-- **AC-33 (RF-22):** Dado un filtro de escenario activo, cuando se consulta, entonces solo aparecen shows de ese escenario.
-- **AC-34 (RF-21, RF-22):** Dados ambos filtros activos, cuando se consulta, entonces solo aparecen shows que cumplen los dos.
-- **AC-35 (RF-23):** Dado un show, cuando se abre su detalle, entonces se muestran artista, descripción, día, escenario, inicio y finalización.
+- **AC-31 (RF-20, RF-21):** Dada una persona autenticada, cuando recorre la grilla de cada día, entonces ve todos los shows del festival exactamente una vez.
+- **AC-32 (RF-21):** Dado un día elegido, cuando se muestra la grilla, entonces solo aparecen bloques de shows de ese día.
+- **AC-33 (RF-22):** Dado un festival con 5 escenarios, cuando se muestra la grilla, entonces cada escenario tiene un color distinto, asignado según su orden de aparición en el CSV, y todos sus bloques usan ese color; las columnas siguen ese mismo orden.
+- **AC-34 (RF-72, RF-73):** Dado un show del escenario B de 18:00 a 19:00 y otro de 18:00 a 18:30, cuando se muestra la grilla, entonces el primero está en la columna B a la altura de 18:00 y su alto es el doble que el del segundo.
+- **AC-35 (RF-23, RF-76):** Dado un bloque, cuando se lo mantiene presionado, entonces se abre el detalle con artista, descripción, día, escenario, inicio y finalización, y la selección no cambia.
+- **AC-105 (RF-74, RF-75):** Dada una pantalla de 375 px de ancho y un día con 5 escenarios, cuando se muestra la grilla, entonces conserva las 5 columnas y la escala horaria, y se puede desplazar horizontal y verticalmente hasta ver todos los bloques.
+- **AC-106 (RF-75):** Dada una pantalla donde la grilla no entra en alto o ancho, cuando se muestra, entonces se puede desplazar en la dirección que no entra.
+- **AC-107 (RF-77, RF-71):** Dado un show del sábado de 00:30 a 01:30 del domingo, cuando se muestra la grilla del sábado, entonces el bloque aparece al final del eje horario, después de las 23:59.
 
 ### Grilla personal
-- **AC-36 (RF-24):** Dado un show no seleccionado, cuando se agrega desde el line-up, entonces aparece en la grilla.
+- **AC-36 (RF-24, RF-26):** Dado un show no seleccionado, cuando se toca su bloque, entonces queda seleccionado y se muestra resaltado.
 - **AC-37 (RF-24):** Dado un show no seleccionado, cuando se agrega desde el detalle, entonces aparece en la grilla.
-- **AC-38 (RF-25):** Dado un show seleccionado, cuando se quita desde el line-up, entonces deja de aparecer en la grilla y las selecciones de otras personas no cambian.
+- **AC-38 (RF-25, RF-26):** Dado un show seleccionado, cuando se toca su bloque, entonces deja de estar seleccionado, se muestra sin resaltar y las selecciones de otras personas no cambian.
 - **AC-39 (RF-25):** Dado un show seleccionado, cuando se quita desde el detalle, entonces deja de aparecer en la grilla y las selecciones de otras personas no cambian.
-- **AC-40 (RF-26):** Dada una grilla con 2 shows del día 1 y 1 del día 2, cuando se consulta, entonces se muestran 2 secciones de día con 2 y 1 shows.
+- **AC-40 (RF-26):** Dados 2 shows seleccionados y 3 no seleccionados del día 1, cuando se muestra su grilla, entonces exactamente 2 bloques aparecen resaltados.
 - **AC-41 (RF-27):** Dados dos shows seleccionados con intervalos solapados, cuando se consulta la grilla, entonces se muestra una advertencia que nombra a ambos.
 - **AC-42 (RF-27):** Dados dos shows donde uno termina exactamente cuando empieza el otro, cuando se consulta la grilla, entonces no se muestra advertencia.
 - **AC-43 (RF-28):** Dados dos shows solapados, cuando se agrega el segundo, entonces ambos permanecen seleccionados.
@@ -259,13 +273,15 @@ Festival Social Grid es un MVP autenticado para consultar el line-up de un únic
 ### Exportación
 - **AC-87 (RF-57, RF-62):** Dada una grilla personal, cuando se exporta en 1080 × 1920, entonces se descarga un PNG de exactamente 1080 × 1920 px.
 - **AC-88 (RF-57, RF-63):** Dada una grilla personal, cuando se exporta en 1080 × 1350, entonces se descarga un PNG de exactamente 1080 × 1350 px.
-- **AC-89 (RF-57):** Dada una grilla con 2 shows seleccionados del día 1 y 1 del día 2, cuando se exporta el día 1, entonces el PNG contiene exactamente esos 2 shows, ubicados en la columna de su escenario y en su franja horaria.
-- **AC-90 (RF-58, RF-62, RF-63):** Dado un miembro de un grupo, cuando solicita la exportación grupal en cada formato, entonces el PNG tiene exactamente las dimensiones elegidas y contiene solo los shows que él seleccionó.
+- **AC-89 (RF-57):** Dado un día 1 con 8 shows, de los cuales la persona seleccionó 2, cuando exporta el día 1, entonces el PNG contiene los 8 shows en la columna de su escenario y su franja horaria, con esos 2 resaltados y los otros 6 opacados.
+- **AC-90 (RF-58, RF-62, RF-63):** Dado un miembro de un grupo, cuando solicita la exportación grupal en cada formato, entonces el PNG tiene exactamente las dimensiones elegidas y resalta solo los shows que ese miembro seleccionó.
+- **AC-108 (RF-78):** Dado el día con más escenarios y mayor rango horario del fixture, cuando se exporta en cada formato, entonces todas las columnas y todo el rango horario quedan dentro de la imagen sin recortes.
+- **AC-110 (RF-80):** Dado un show de 15 minutos, cuando se exporta su día en 1080 × 1350, entonces el nombre del artista se ve con fuente de al menos 20 px, truncado con “…” si no entra, y el horario se omite si no hay lugar.
 - **AC-91 (RF-59):** Dado un show seleccionado por el solicitante y otros 2 miembros, cuando se genera el PNG grupal, entonces el show muestra conteo 3.
 - **AC-92 (RF-60, RF-61):** Dada una exportación grupal con nombres activados, cuando un show fue seleccionado por 2 miembros, entonces el PNG muestra sus nombres de usuario.
 - **AC-93 (RF-61):** Dada una exportación grupal con nombres activados, cuando un show fue seleccionado por 1 miembro, entonces el PNG no muestra nombres para ese show.
 - **AC-94 (RF-60):** Dada una exportación grupal sin activar nombres, cuando un show fue seleccionado por 3 miembros, entonces el PNG no muestra ningún nombre.
-- **AC-95 (RF-64):** Dada una grilla con 10 shows en un mismo día, cuando se exporta ese día, entonces el PNG incluye los 10 shows.
+- **AC-95 (RF-64):** Dado un día con 40 shows, cuando se exporta ese día, entonces el PNG incluye los 40 shows.
 - **AC-96 (RNF-03):** Dado el *fixture* y las condiciones de RNF-03, cuando se miden las 100 exportaciones, entonces el p95 es inferior a 5 s.
 - **AC-97 (RNF-01):** Dado el *fixture* y las condiciones de RNF-01, cuando se miden las solicitudes de line-up, grilla personal y vista grupal, entonces el p95 de cada operación es inferior a 2 s.
 
@@ -308,7 +324,9 @@ Festival Social Grid es un MVP autenticado para consultar el line-up de un únic
 | Riesgo | Un cambio del line-up puede volver inconsistentes selecciones existentes. | Identificadores estables, evaluar impacto en el importador y no reasignar selecciones automáticamente. |
 | Riesgo | La privacidad puede vulnerarse por accesos directos a recursos ajenos. | Autorización del lado del servidor y pruebas de acceso cruzado (RNF-04, RNF-05). |
 | Riesgo | Incluir nombres de terceros en un PNG facilita compartirlos fuera del grupo. | Conteos sin nombres por defecto y elección explícita para incluirlos (RF-60). |
-| Riesgo | Sin tope de shows (RF-64), una grilla extensa puede no ser legible en tamaños PNG fijos. | Mitigado: un PNG por día en formato timeline, donde cada show ocupa el alto proporcional a su duración; no hay RNF que verifique la legibilidad. |
+| Riesgo | Escalar la grilla completa de un día (RF-78) puede volver ilegible el texto en tamaños PNG fijos si hay muchos escenarios u horas. | Un PNG por día, máximo 5 escenarios (RF-79) y tamaños mínimos de fuente con truncado (RF-80). |
+| Riesgo | En pantallas chicas, una grilla de forma fija requiere desplazamiento en dos ejes y puede dificultar la orientación. | Aceptado por decisión de producto (RF-74, RF-75). |
+| Riesgo | Mantener presionado para abrir el detalle es poco descubrible y puede confundirse con el desplazamiento. | Validar en pruebas de navegador que tocar, mantener presionado y desplazar no se interfieran (AC-35, AC-105). |
 | Riesgo | Un reloj de cliente o zona local incorrectos pueden inducir estados erróneos. | Usar solo el instante UTC del servidor y `America/Argentina/Buenos_Aires`. |
 | Riesgo | La enumeración de usuarios por búsqueda de nombre de usuario sigue siendo posible. | Aceptado: la búsqueda es parte del producto y solo expone nombre de usuario y avatar (RF-19). |
 | Dependencia | Desarrollo debe mantener la configuración de metadatos del festival único. | Disponible antes del despliegue. |
