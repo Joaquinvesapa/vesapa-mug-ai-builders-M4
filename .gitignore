@@ -48,3 +48,6 @@ next-env.d.ts
 /playwright/.cache/
 /src/generated/
 /tests/load/results/
+
+# agent tooling
+/.atl/
