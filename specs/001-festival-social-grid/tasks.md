@@ -261,7 +261,7 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 ## Phase 11: Polish & Cross-Cutting Concerns
 
 - [X] T082 [P] Prueba de integración transversal de privacidad: barrido de todas las rutas con persona no autenticada y con persona ajena, 0 exposiciones (RNF-04, RNF-05) en `tests/integration/access/privacy-sweep.test.ts`, con inventario que falla si una ruta de API queda sin cubrir, más barrido de páginas sin sesión en `tests/e2e/auth.spec.ts`
-- [ ] T083 [P] Fixture de rendimiento: 150 shows, grupo de 15 con 30 selecciones por miembro en `tests/fixtures/perf/seed.ts`
+- [X] T083 [P] Fixture de rendimiento: 150 shows, grupo de 15 con 30 selecciones por miembro en `tests/fixtures/perf/seed.ts`
 - [ ] T084 **BLOQUEADA** (herramienta de carga pendiente) Prueba de carga de line-up, grilla personal y vista grupal con p95 < 2 s (RNF-01, AC-97) en `tests/load/`
 - [ ] T085 **BLOQUEADA** (herramienta de carga pendiente) Prueba de carga de exportación con p95 < 5 s (RNF-03, AC-96) en `tests/load/`
 - [ ] T086 **BLOQUEADA** (hosting pendiente) Verificar TLS ≥ 1.2 y rechazo de 1.1 en el endpoint público (RNF-07, AC-22)
