@@ -1,0 +1,73 @@
+# Research: Festival Social Grid — MVP
+
+Decisiones de stack confirmadas por el propietario el 2026-10-13: Prisma, Auth.js (Google) + PIN propio, Satori + resvg, Testcontainers. Lo demás se marca como propuesta o pendiente.
+
+## 1. Acceso a datos — Prisma
+
+- **Decision**: Prisma como ORM y para migraciones.
+- **Rationale**: elegido por el propietario; tipos generados y migraciones versionadas.
+- **Consecuencias de diseño**:
+  - Unicidad sin distinguir mayúsculas: columna `usernameKey` (minúsculas) con índice único, porque Prisma no ofrece índices funcionales de forma nativa.
+  - Cupo de grupo (≤ 15 miembros + invitaciones vigentes) y "un grupo por persona": transacción interactiva que bloquea la fila del grupo con `SELECT … FOR UPDATE` (`$queryRaw`) antes de contar; la unicidad de `Membership.userId` actúa como red de seguridad.
+  - Importador: una sola transacción; si la validación falla no se escribe nada (RNF-06).
+- **Alternatives considered**: Drizzle (más control de SQL), SQL directo.
+
+## 2. Autenticación — Auth.js + PIN propio
+
+- **Decision**: Auth.js con proveedor Google y adaptador Prisma, **sesiones en base de datos**. El acceso por PIN es un Route Handler propio que valida, aplica bloqueo y, si corresponde, crea una fila `Session` y la cookie de sesión de Auth.js.
+- **Rationale**: el proveedor `Credentials` de Auth.js obliga a sesiones JWT, que no permiten invalidar del lado del servidor ni controlar la respuesta uniforme (RNF-12). Con sesiones en DB, cerrar sesión elimina la fila (AC-10).
+- **Reglas**:
+  - Cuentas Google y PIN separadas: una cuenta con `Account` de Google no tiene `pinHash`; un intento de PIN contra ella responde igual que un PIN incorrecto (AC-21).
+  - Bloqueo: `failedAttempts` y `lockedUntil` por usuario; 5 fallos ⇒ `lockedUntil = now + 15 min`; éxito ⇒ contador a 0 (RNF-10/11). Actualización atómica dentro de una transacción.
+  - Respuesta uniforme: PIN incorrecto, usuario bloqueado y cuenta Google ⇒ `401` con el mismo cuerpo `{"error":"invalid_credentials"}`. Se ejecuta la verificación de hash también en caso de bloqueo para igualar tiempos.
+  - Primer acceso con Google: el usuario queda sin `username`; un guard de servidor redirige a elegir nombre y bloquea todo contenido hasta fijarlo (AC-11).
+- **Alternatives considered**: Better Auth; implementación completa propia.
+
+## 3. Generación de PNG — Satori + resvg
+
+- **Decision**: plantilla JSX de la grilla → SVG (Satori) → PNG (resvg) en un Route Handler en runtime Node.
+- **Rationale**: elegido por el propietario; tamaños exactos (1080 × 1920 / 1080 × 1350) y sin navegador, acorde con p95 < 5 s.
+- **Diseño**:
+  - El layout (posiciones y altos de bloques) se calcula en `src/domain/grid-layout` y lo consumen tanto la grilla de la app como la plantilla Satori; así comparten la regla de texto (omitir horario, luego truncar con "…").
+  - Satori solo soporta flexbox: los bloques se posicionan con `position: absolute` usando las coordenadas precalculadas.
+  - Escala: `factor = min(anchoDisponible / anchoGrilla, altoDisponible / altoGrilla)`, sin deformación (RF-78).
+  - Fuentes: archivo de fuente versionado en el repo (licencia libre) cargado en memoria una vez.
+  - No se persisten PNG ni hay URL públicas: cada solicitud se autoriza y se genera al vuelo (RNF-04/05).
+- **Alternatives considered**: Chromium headless (lento), canvas manual.
+
+## 4. Base de datos de prueba — Testcontainers
+
+- **Decision**: Testcontainers levanta una PostgreSQL efímera por corrida de integración; se aplican migraciones de Prisma al iniciar y se limpia entre pruebas.
+- **Rationale**: reproducible en local y CI, sin afectar datos reales (Constitución IV).
+- **Requisito**: Docker disponible para el usuario sin `sudo`. Si no lo está, el propietario debe configurarlo (el agente no ejecuta comandos de administrador).
+
+## 5. Tiempo autoritativo y estados
+
+- **Decision**: los horarios del CSV se interpretan en `America/Argentina/Buenos_Aires` y se guardan como instantes UTC (`timestamptz`). El servidor entrega `serverNow` con cada página y en `GET /api/time`; el cliente calcula `offset = serverNow − Date.now()` al recibirlo y evalúa estados con `Date.now() + offset`. Recalcula cada 15 s y resincroniza el offset cada 5 minutos.
+- **Rationale**: cumple RNF-02 (≤ 60 s) sin depender de la hora del dispositivo (AC-84); las reglas de borde (`<`, `>=`) viven en una función pura probada con ms exactos (AC-80…83).
+- **Alternatives considered**: estados calculados solo en servidor con recarga periódica (más carga); WebSockets (innecesario).
+
+## 6. Grilla en la app
+
+- **Decision**: grilla con columnas de ancho fijo y escala definida por la constante `MINUTE_HEIGHT_PX` en `src/domain/grid-layout.ts` (valor inicial 2, ajustable en diseño visual; las pruebas verifican proporciones, no píxeles) dentro de un contenedor con scroll en ambos ejes; encabezados de escenario y eje horario fijos (sticky). Shows posteriores a medianoche se ubican como minutos > 24 h del día del festival.
+- **Gestos**: pointer events. Toque corto ⇒ alternar selección; presión ≥ 500 ms sin moverse más de 10 px ⇒ abrir detalle sin cambiar selección; movimiento > 10 px ⇒ desplazamiento, sin acción (AC-35, AC-105).
+- **Selección**: Server Action con actualización optimista; idempotente (agregar dos veces no duplica).
+- **Rationale**: forma fija en cualquier pantalla (RF-74) y gestos sin interferencia.
+
+## 7. Vista grupal y actualización
+
+- **Decision**: consulta agregada por día (conteo por show + nombres solo si conteo ≥ 2, calculados en el servidor, nunca enviados al cliente si conteo < 2). Se actualiza al cargar y con un botón "Actualizar" (sin tiempo real, FR-063).
+- **Orden por cantidad**: conteo descendente; desempate por inicio ascendente y luego artista (FR-062).
+
+## 8. Propuestas pendientes de confirmación del propietario
+
+| Necesidad | Propuesta | Alternativa |
+|---|---|---|
+| Hash del PIN | **Confirmado (2026-10-13)**: `@node-rs/argon2` (Argon2id) | `bcrypt` (descartado) |
+| Parseo del CSV | **Confirmado (2026-10-13)**: `csv-parse` | parser propio mínimo (descartado) |
+| Validación de entradas | **Confirmado (2026-10-13)**: `zod` | validación manual (descartado) |
+| Manejo de zonas horarias | **Confirmado (2026-10-13)**: sin dependencia; `Intl` nativo + función propia de conversión con pruebas (Argentina usa UTC−3 fijo, sin horario de verano) | `date-fns-tz` (descartado) |
+| Herramienta de pruebas de carga (RNF-01/03) | **PENDIENTE** (k6, autocannon u otra) | — |
+| Hosting / TLS (RNF-07) | **PENDIENTE** (Vercel candidato) | — |
+
+Quedan pendientes solo la herramienta de carga y el hosting; las unidades que dependan de ellos quedan bloqueadas hasta su decisión.
