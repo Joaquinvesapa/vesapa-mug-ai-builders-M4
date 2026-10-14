@@ -31,12 +31,12 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 
 **Purpose**: inicializar el proyecto. Instalar dependencias requiere autorización del propietario (Constitución IV).
 
-- [ ] T001 Crear proyecto Next.js (App Router, TypeScript estricto, Tailwind CSS) en la raíz y leer `node_modules/next/dist/docs/` para fijar convenciones de la versión instalada; registrar hallazgos en `specs/001-festival-social-grid/research.md`
-- [ ] T002 Instalar dependencias acordadas: `prisma`, `@prisma/client`, `next-auth` (Auth.js) + `@auth/prisma-adapter`, `satori`, `@resvg/resvg-js`, `@node-rs/argon2`, `csv-parse`, `zod`; y de prueba: `vitest`, `@testing-library/react`, `@testing-library/jest-dom`, `jsdom`, `@testcontainers/postgresql`, `@playwright/test` en `package.json`
-- [ ] T003 [P] Configurar Vitest con proyectos `unit` (jsdom) e `integration` (node) en `vitest.config.ts` y scripts `test:unit`, `test:integration`, `test:e2e`, `lint`, `typecheck` en `package.json`
-- [ ] T004 [P] Configurar Playwright con perfiles móvil (375 px de ancho) y escritorio en Chromium, WebKit y Firefox (FR-084) en `playwright.config.ts`
-- [ ] T005 [P] Crear `.env.example` sin valores con `DATABASE_URL`, `AUTH_SECRET`, `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET` y asegurar `.env*` (salvo `.env.example`) en `.gitignore`
-- [ ] T006 [P] Agregar fuente libre versionada para la UI y el PNG en `public/fonts/` y documentar su licencia en `public/fonts/LICENSE`
+- [X] T001 Crear proyecto Next.js (App Router, TypeScript estricto, Tailwind CSS) en la raíz y leer `node_modules/next/dist/docs/` para fijar convenciones de la versión instalada; registrar hallazgos en `specs/001-festival-social-grid/research.md`
+- [X] T002 Instalar dependencias acordadas: `prisma`, `@prisma/client`, `next-auth` (Auth.js) + `@auth/prisma-adapter`, `satori`, `@resvg/resvg-js`, `@node-rs/argon2`, `csv-parse`, `zod`; y de prueba: `vitest`, `@testing-library/react`, `@testing-library/jest-dom`, `jsdom`, `@testcontainers/postgresql`, `@playwright/test` en `package.json`
+- [X] T003 [P] Configurar Vitest con proyectos `unit` (jsdom) e `integration` (node) en `vitest.config.ts` y scripts `test:unit`, `test:integration`, `test:e2e`, `lint`, `typecheck` en `package.json`
+- [X] T004 [P] Configurar Playwright con perfiles móvil (375 px de ancho) y escritorio en Chromium, WebKit y Firefox (FR-084) en `playwright.config.ts`
+- [X] T005 [P] Crear `.env.example` sin valores con `DATABASE_URL`, `AUTH_SECRET`, `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET` y asegurar `.env*` (salvo `.env.example`) en `.gitignore`
+- [X] T006 [P] Agregar fuente libre versionada para la UI y el PNG en `public/fonts/` y documentar su licencia en `public/fonts/LICENSE`
 
 ---
 

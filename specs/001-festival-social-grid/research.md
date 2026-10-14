@@ -71,3 +71,14 @@ Decisiones de stack confirmadas por el propietario el 2026-10-13: Prisma, Auth.j
 | Hosting / TLS (RNF-07) | **PENDIENTE** (Vercel candidato) | — |
 
 Quedan pendientes solo la herramienta de carga y el hosting; las unidades que dependan de ellos quedan bloqueadas hasta su decisión.
+
+## 9. Convenciones de Next.js 16.4 (T001, leídas en `node_modules/next/dist/docs/`)
+
+Versiones instaladas el 2026-10-14: Next 16.4.0, React 19.3.0, Tailwind 4, TypeScript 5.9, Node 24. Dependencias fijadas en versión exacta: `next-auth@5.0.0-beta.32` (Auth.js v5 sigue en beta; decisión del propietario), `@auth/prisma-adapter@2.11.3`, `prisma` y `@prisma/client@7.10.0` (el tag `latest` de `prisma` apunta a una RC 8.x; se descartó), `satori@0.56.1`, `@resvg/resvg-js@2.6.2`, `@node-rs/argon2@2.2.2`, `csv-parse@7.0.3`, `zod@4.6.7`, `vitest@5.0.4`, `@testcontainers/postgresql@12.2.1`, `@playwright/test@1.64.0`. `@types/node` subió a `^24` porque Vitest 5 exige ≥ 22.12.
+
+- **Cache Components activo por defecto** (`cacheComponents: true` en `next.config.ts`). Leer `cookies()`/la sesión fuera de un `<Suspense>` es error de build. Toda lectura de sesión (Auth.js `auth()`) va en un componente dentro de un límite `<Suspense>`, nunca en el nivel superior de un layout. Los datos derivados de la sesión se cachean pasando el `userId` a funciones con `'use cache'` o con `'use cache: private'` (guía `02-guides/authentication-with-cache-components.md`).
+- **Middleware se llama Proxy**: archivo `src/proxy.ts` con `export function proxy(request)`; corre en runtime Node; necesita `matcher` que excluya `_next/static`, `_next/image` y `public`. Solo sirve para chequeos optimistas (redirigir sin cookie de sesión); **la autorización real va en cada Server Function, Route Handler y en el Data Access Layer** (`src/server/`), porque un cambio de matcher puede dejar acciones sin cubrir.
+- **Server Functions** se invocan como POST a la ruta donde se usan: cada acción vuelve a verificar sesión y permisos.
+- **Vitest no soporta Server Components `async`**: se prueban con Playwright (coincide con la estrategia del plan). Vite 8 resuelve los alias de `tsconfig` sin plugin extra.
+- **Scripts de instalación de npm 11**: quedan sin aprobar (`@prisma/engines`, `prisma`, `esbuild`, `unrs-resolver`, `protobufjs`, `ssh2`, `cpu-features`); Prisma 7 usa el compilador WASM y todas las herramientas funcionan sin ellos. Se aprueban solo si una tarea lo requiere, con autorización del propietario.
+- **Auditoría (`npm audit`)**: 11 avisos en dependencias transitivas de herramientas (`mysql2` vía CLI de Prisma, no se usa MySQL; `fflate` vía Satori, solo descomprime fuentes versionadas). La corrección automática degrada versiones mayores (`prisma@6`, `satori@0.32`), así que no se aplica; se revisa al actualizar.
