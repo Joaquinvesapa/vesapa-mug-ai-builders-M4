@@ -68,10 +68,10 @@ Decisiones de stack confirmadas por el propietario el 2026-10-13: Prisma, Auth.j
 | Validación de entradas | **Confirmado (2026-10-13)**: `zod` | validación manual (descartado) |
 | Manejo de zonas horarias | **Confirmado (2026-10-13)**: sin dependencia; `Intl` nativo + función propia de conversión con pruebas (Argentina usa UTC−3 fijo, sin horario de verano) | `date-fns-tz` (descartado) |
 | Auditoría de accesibilidad (FR-085) | **Confirmado (2026-10-14)**: `@axe-core/playwright` | contraste calculado a mano (descartado) |
-| Herramienta de pruebas de carga (RNF-01/03) | **PENDIENTE** (k6, autocannon u otra) | — |
+| Herramienta de pruebas de carga (RNF-01/03) | **Confirmado (2026-10-14)**: k6 `grafana/k6:2.3.0` en Docker, contra un stack aislado con app (1,5 CPU, 3 GB) y base (0,5 CPU, 1 GB) dentro del presupuesto de 2 vCPU y 4 GB | autocannon, script propio en Node (descartados) |
 | Hosting / TLS (RNF-07) | **PENDIENTE** (Vercel candidato) | — |
 
-Quedan pendientes solo la herramienta de carga y el hosting; las unidades que dependan de ellos quedan bloqueadas hasta su decisión.
+Queda pendiente solo el hosting (y el proveedor de CI); las unidades que dependan de ellos quedan bloqueadas hasta su decisión.
 
 ## 9. Convenciones de Next.js 16.4 (T001, leídas en `node_modules/next/dist/docs/`)
 

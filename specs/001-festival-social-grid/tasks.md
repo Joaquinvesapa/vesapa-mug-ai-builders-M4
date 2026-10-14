@@ -262,8 +262,8 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 
 - [X] T082 [P] Prueba de integración transversal de privacidad: barrido de todas las rutas con persona no autenticada y con persona ajena, 0 exposiciones (RNF-04, RNF-05) en `tests/integration/access/privacy-sweep.test.ts`, con inventario que falla si una ruta de API queda sin cubrir, más barrido de páginas sin sesión en `tests/e2e/auth.spec.ts`
 - [X] T083 [P] Fixture de rendimiento: 150 shows, grupo de 15 con 30 selecciones por miembro en `tests/fixtures/perf/seed.ts`
-- [ ] T084 **BLOQUEADA** (herramienta de carga pendiente) Prueba de carga de line-up, grilla personal y vista grupal con p95 < 2 s (RNF-01, AC-97) en `tests/load/`
-- [ ] T085 **BLOQUEADA** (herramienta de carga pendiente) Prueba de carga de exportación con p95 < 5 s (RNF-03, AC-96) en `tests/load/`
+- [X] T084 Prueba de carga de line-up, grilla personal y vista grupal con p95 < 2 s (RNF-01, AC-97) con k6 en `tests/load/queries.js`; line-up y grilla personal son la misma página (`/grilla/[dia]`) y se miden juntas (200 pedidos), vista grupal aparte (100); se ejecuta con `npm run test:load`
+- [X] T085 Prueba de carga de exportación con p95 < 5 s (RNF-03, AC-96) con k6 en `tests/load/export.js`; se ejecuta con `npm run test:load`
 - [ ] T086 **BLOQUEADA** (hosting pendiente) Verificar TLS ≥ 1.2 y rechazo de 1.1 en el endpoint público (RNF-07, AC-22)
 - [ ] T087 Realizar prueba de uso manual con 5 personas (encontrar show, agregarlo, ver coincidencia; éxito si ≥ 4 lo logran sin ayuda en < 3 min) y registrar resultados en `specs/001-festival-social-grid/usability-results.md` (SC-008)
 - [X] T088 [P] Prueba e2e de accesibilidad básica: auditoría WCAG 2.1 A/AA con `@axe-core/playwright` (incluye contraste), foco visible y opción "Ver detalle" en bloques (FR-085) en `tests/e2e/accessibility.spec.ts`
@@ -282,7 +282,7 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 - **US4** → **US5** (la vista grupal necesita grupos).
 - **US6** depende de US3; su parte grupal, de US5.
 - **US7** es independiente tras US1; T081 se integra con la página de US4.
-- **Polish (11)** al final; T084–T086 bloqueadas por decisiones del propietario.
+- **Polish (11)** al final; T086 bloqueada hasta elegir hosting.
 
 ### Within Each User Story
 
@@ -322,4 +322,4 @@ T059 groups.spec.ts (e2e)
 3. US4 → US5: valor social.
 4. US6: exportación.
 5. US7: perfil y búsqueda.
-6. Polish; desbloquear T084–T086 cuando el propietario decida herramienta de carga y hosting.
+6. Polish; desbloquear T086 cuando el propietario decida el hosting.

@@ -30,5 +30,6 @@ Requiere Node.js 24 y Docker.
 | `npm run test:unit` | Vitest (jsdom) sobre `tests/unit/` |
 | `npm run test:integration` | Vitest + PostgreSQL efímera (Testcontainers, requiere Docker) sobre `tests/integration/` |
 | `npm run test:e2e` | Playwright sobre `tests/e2e/` |
+| `npm run test:load` | Pruebas de carga de RNF-01 y RNF-03 con k6 en Docker (stack aislado, 2 vCPU y 4 GB); `SKIP_BUILD=1` reutiliza el build |
 
 Las variables de entorno se documentan en `.env.example`; los valores reales van en `.env.local`, que no se versiona.
