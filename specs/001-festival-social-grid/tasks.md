@@ -71,12 +71,12 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 
 ### Tests for User Story 8 ⚠️
 
-- [ ] T019 [P] [US8] Prueba unitaria del validador del CSV: campos requeridos (id, artista, descripción, día, escenario, inicio, finalización), `endsAt > startsAt`, id duplicado, día no configurado, más de 5 escenarios, orden de escenarios por aparición en `tests/unit/domain/lineup-validation.test.ts`
+- [X] T019 [P] [US8] Prueba unitaria del validador del CSV: campos requeridos (id, artista, descripción, día, escenario, inicio, finalización), `endsAt > startsAt`, id duplicado, día no configurado, más de 5 escenarios, orden de escenarios por aparición en `tests/unit/domain/lineup-validation.test.ts`
 - [ ] T020 [P] [US8] Prueba de integración del importador: CSV válido carga 1 festival y todos los shows (AC-01); show sin escenario o 6 escenarios ⇒ falla y 0 shows de esa ejecución (AC-03, AC-109); reimportación conserva ids; si faltan shows se rechaza sin cambios y los lista; con flag de eliminación los borra junto con sus selecciones (FR-006) en `tests/integration/import/import-lineup.test.ts`
 
 ### Implementation for User Story 8
 
-- [ ] T021 [US8] Implementar validación con `zod` y `csv-parse` en `src/domain/lineup-validation.ts` (cierra T019)
+- [X] T021 [US8] Implementar validación con `zod` y `csv-parse` en `src/domain/lineup-validation.ts` (cierra T019)
 - [ ] T022 [US8] Implementar importador transaccional (upsert por id; faltantes ⇒ rechazo con listado; eliminación con selecciones solo con flag explícito) en `scripts/import-lineup.ts` y script `import:lineup` en `package.json` (cierra T020)
 - [ ] T023 [P] [US8] Crear CSV de fixture válido e inválidos en `tests/fixtures/lineup/` y CSV versionado del festival en `data/lineup.csv` (parte de la unidad de T020)
 
