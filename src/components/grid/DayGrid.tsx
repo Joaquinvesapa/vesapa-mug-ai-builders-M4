@@ -2,7 +2,7 @@
 
 import { useCallback, useState, type ReactNode } from "react";
 import type { BlockView, DayView } from "@/domain/grid-view";
-import { ShowBlock } from "./ShowBlock";
+import { ShowBlock, type GroupBadge } from "./ShowBlock";
 import { ShowDetail } from "./ShowDetail";
 
 const AXIS_WIDTH = "3.5rem";
@@ -15,11 +15,13 @@ type Props = {
   statusOf?: (showId: string) => string | undefined;
   /** Shows involved in an overlap of the person's selection (FR-092). */
   warnedIds?: ReadonlySet<string>;
+  /** Group count and match flag shown on each block of the group view (FR-062). */
+  badgeOf?: (showId: string) => GroupBadge | undefined;
   /** Extra actions rendered in the detail dialog (e.g. add/remove from the personal grid). */
   detailActions?: (block: BlockView) => ReactNode;
 };
 
-export function DayGrid({ view, selectedIds, onToggle, statusOf, warnedIds, detailActions }: Props) {
+export function DayGrid({ view, selectedIds, onToggle, statusOf, warnedIds, badgeOf, detailActions }: Props) {
   const [detailId, setDetailId] = useState<string | null>(null);
   const closeDetail = useCallback(() => setDetailId(null), []);
   const detail = view.blocks.find((b) => b.showId === detailId);
@@ -71,6 +73,7 @@ export function DayGrid({ view, selectedIds, onToggle, statusOf, warnedIds, deta
                         selected={selectedIds?.has(block.showId)}
                         status={statusOf?.(block.showId)}
                         warned={warnedIds?.has(block.showId)}
+                        badge={badgeOf?.(block.showId)}
                         onToggle={onToggle}
                         onOpenDetail={setDetailId}
                       />

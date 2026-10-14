@@ -1,6 +1,9 @@
+import Link from "next/link";
 import { Suspense } from "react";
+import { festival } from "@config/festival";
 import { ActionForm } from "@/components/group/ActionForm";
 import { dangerButton, inputClass, primaryButton, secondaryButton } from "@/components/ui";
+import { defaultFestivalDay } from "@/domain/festival-days";
 import { formatFestivalTime } from "@/domain/time";
 import {
   cancelInvitationAction,
@@ -15,24 +18,30 @@ import {
 import { getMyGroup } from "@/server/groups/group-service";
 import { requirePageUser } from "@/server/page-session";
 
-export default function GroupPage() {
+export default function GroupPage({ searchParams }: PageProps<"/grupo">) {
   return (
     <main className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-6 p-4">
       <Suspense fallback={<p className="text-neutral-400">Cargando el grupo…</p>}>
-        <GroupContent />
+        <GroupContent searchParams={searchParams} />
       </Suspense>
     </main>
   );
 }
 
-async function GroupContent() {
+async function GroupContent({ searchParams }: { searchParams: PageProps<"/grupo">["searchParams"] }) {
   const user = await requirePageUser();
   const group = await getMyGroup(user.id);
 
   if (!group) {
+    const { aviso } = await searchParams;
     return (
       <section className="flex flex-col gap-4">
         <h1 className="text-2xl font-bold">Grupo</h1>
+        {aviso === "removido" && (
+          <p role="status" className="rounded-lg border border-amber-500 bg-amber-950 px-3 py-2 text-amber-100">
+            Ya no sos miembro de este grupo
+          </p>
+        )}
         <p className="text-neutral-300">Todavía no tenés grupo. Creá uno o aceptá una invitación.</p>
         <ActionForm action={createGroupAction} className="flex flex-wrap items-end gap-2">
           <label className="flex flex-1 flex-col gap-1">
@@ -51,6 +60,12 @@ async function GroupContent() {
     <>
       <section className="flex flex-col gap-3">
         <h1 className="text-2xl font-bold">{group.name}</h1>
+        <Link
+          href={`/grupo/vista/${defaultFestivalDay(festival.days, new Date())}`}
+          className="self-start rounded-lg bg-violet-500 px-4 py-2 font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        >
+          Ver coincidencias del grupo
+        </Link>
         {group.isOwner && (
           <ActionForm action={renameGroupAction} className="flex flex-wrap items-end gap-2">
             <label className="flex flex-1 flex-col gap-1">
