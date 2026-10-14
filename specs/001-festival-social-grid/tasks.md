@@ -202,13 +202,13 @@ Proyecto único Next.js en la raíz: `src/`, `prisma/`, `scripts/`, `config/`, `
 ### Tests for User Story 5 ⚠️
 
 - [X] T065 [P] [US5] Prueba unitaria de coincidencias y orden: conteo (AC-70), nombres solo con conteo ≥ 2 (AC-71, AC-72), marca de coincidencia (AC-73, AC-74), orden por horario (AC-75) y por cantidad con desempate por inicio y artista (AC-76), filtro ≥ 2 (AC-77) en `tests/unit/domain/group-matches.test.ts`
-- [ ] T066 [P] [US5] Prueba de integración de `GET /api/group/view`: refleja cambios al consultar (AC-78), nunca envía nombres con conteo < 2, ajeno recibe 404 sin conteos ni nombres (AC-79); persona removida con la vista abierta es llevada a `/grupo` con aviso (FR-094); vista sin selecciones muestra estado vacío (FR-090) en `tests/integration/groups/group-view.test.ts`
+- [X] T066 [P] [US5] Prueba de integración de `GET /api/group/view`: refleja cambios al consultar (AC-78), nunca envía nombres con conteo < 2, ajeno recibe 404 sin conteos ni nombres (AC-79); persona removida deja de recibir la vista (FR-094) en `tests/integration/groups/group-view.test.ts`; la redirección con aviso y el estado vacío (FR-090) se verifican en la e2e de T067
 - [ ] T067 [P] [US5] Prueba e2e: grilla grupal con conteos y pestaña de lista con orden y filtro en `tests/e2e/group-view.spec.ts`
 
 ### Implementation for User Story 5
 
 - [X] T068 [US5] Implementar agregación y orden/filtro en `src/domain/group-matches.ts` (cierra T065)
-- [ ] T069 [US5] Implementar consulta agregada y `GET /api/group/view` en `src/server/groups/group-view.ts` y `src/app/api/group/view/route.ts` (cierra T066)
+- [X] T069 [US5] Implementar consulta agregada y `GET /api/group/view` en `src/server/groups/group-view.ts` y `src/app/api/group/view/route.ts` (cierra T066)
 - [ ] T070 [US5] Implementar página `/grupo/vista/[dia]` (grilla con conteos + pestaña de lista, botón Actualizar) en `src/app/(app)/grupo/vista/[dia]/page.tsx` y `src/components/group/GroupList.tsx` (cierra T067)
 
 **Checkpoint**: valor social completo.
